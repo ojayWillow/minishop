@@ -661,6 +661,18 @@ footer p.about { font-size: .88rem; color: var(--ink-soft); max-width: 38ch; mar
     chips();
   }
 
+  /* When a filter shrinks the catalog, the page gets shorter and the browser
+     clamps the scroll position — which can dump the user at the very bottom.
+     If the results have scrolled up out of view, bring them back under the header.
+     Does nothing when the shop is already in view (e.g. user is at the top). */
+  var shopEl = document.getElementById('veikals');
+  function keepResultsInView() {
+    var top = shopEl.getBoundingClientRect().top;
+    if (top < 70) {
+      window.scrollTo({ top: Math.max(0, window.scrollY + top - 70), behavior: 'auto' });
+    }
+  }
+
   /* ---------- events ---------- */
   document.querySelectorAll('fieldset[data-filter="cat"] input, fieldset[data-filter="season"] input, fieldset[data-filter="size"] input').forEach(function (input) {
     input.addEventListener('change', function () {
@@ -670,6 +682,7 @@ footer p.about { font-size: .88rem; color: var(--ink-soft); max-width: 38ch; mar
       else { arr.splice(arr.indexOf(input.value), 1); }
       if (key === 'season') syncSeasonCards();
       render();
+      keepResultsInView();
     });
   });
 
@@ -680,6 +693,7 @@ footer p.about { font-size: .88rem; color: var(--ink-soft); max-width: 38ch; mar
       if (i < 0) state.color.push(c); else state.color.splice(i, 1);
       sw.setAttribute('aria-pressed', i < 0 ? 'true' : 'false');
       render();
+      keepResultsInView();
     });
   });
 
@@ -688,10 +702,11 @@ footer p.about { font-size: .88rem; color: var(--ink-soft); max-width: 38ch; mar
     state.maxPrice = +priceIn.value;
     document.getElementById('priceOut').textContent = priceIn.value + ' €';
     render();
+    keepResultsInView();
   });
 
-  document.getElementById('fSale').addEventListener('change', function (e) { state.sale = e.target.checked; render(); });
-  document.getElementById('fNew').addEventListener('change', function (e) { state.isNew = e.target.checked; render(); });
+  document.getElementById('fSale').addEventListener('change', function (e) { state.sale = e.target.checked; render(); keepResultsInView(); });
+  document.getElementById('fNew').addEventListener('change', function (e) { state.isNew = e.target.checked; render(); keepResultsInView(); });
   document.getElementById('sort').addEventListener('change', function (e) { state.sort = e.target.value; render(); });
   document.getElementById('q').addEventListener('input', function (e) { state.q = e.target.value.trim().toLowerCase(); render(); });
 
