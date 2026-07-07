@@ -92,19 +92,20 @@ fieldset.fgroup legend { font-family: var(--display); font-weight: 700; font-siz
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 16px; }
 .product { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform .15s ease, box-shadow .15s ease; }
 .product:hover { transform: translateY(-4px); box-shadow: 0 12px 26px var(--shadow); }
+.plink { text-decoration: none; color: inherit; display: flex; flex-direction: column; flex: 1; }
 .ph { position: relative; padding: 22px 0 8px; display: grid; place-items: center; min-height: 150px; background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--yarn) 28%, var(--card)) 0 46%, transparent 47%), var(--card); }
 .ph .setwrap { display: flex; align-items: flex-end; gap: 2px; }
 .ph .pimg { width: 100%; height: 100%; min-height: 168px; object-fit: cover; position: absolute; inset: 0; }
 .badge { position: absolute; top: 10px; left: 10px; background: var(--accent); color: var(--accent-ink); font-size: .64rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 3px 9px; z-index: 2; }
 .badge.alt { background: var(--ink); color: var(--ground); }
 .badge.sale { background: var(--yarn-medus); color: #3A2C23; }
-.pinfo { padding: 2px 16px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.pinfo { padding: 2px 16px 10px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .pinfo h3 { font-size: .98rem; font-weight: 600; }
 .pinfo .meta { font-size: .76rem; color: var(--ink-soft); margin: 0; }
-.buy { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 4px; }
+.buy { display: flex; align-items: center; gap: 10px; padding: 0 16px 16px; }
 .price { font-weight: 700; font-size: 1.1rem; }
 .price s { color: var(--ink-soft); font-weight: 600; font-size: .8rem; margin-right: 5px; }
-.add { margin-left: auto; border: none; cursor: pointer; background: var(--accent-soft); color: var(--ink); font-family: var(--display); font-weight: 700; font-size: .8rem; border-radius: 999px; padding: 7px 14px; }
+.add { margin-left: auto; border: none; cursor: pointer; text-decoration: none; background: var(--accent-soft); color: var(--ink); font-family: var(--display); font-weight: 700; font-size: .8rem; border-radius: 999px; padding: 7px 14px; }
 .add:hover { background: var(--accent); color: var(--accent-ink); }
 
 .empty { border: 2px dashed var(--line); border-radius: var(--radius); padding: 50px 30px; text-align: center; color: var(--ink-soft); }

@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Mini Me — product.css
+   Product detail page (PDP): media, buy box, specs, related items.
+   ========================================================================== */
+.pdp-wrap { padding: 26px 0 20px; }
+.crumbs { font-size: .78rem; color: var(--ink-soft); margin: 0 0 18px; }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { color: var(--accent); }
+
+.pdp { display: grid; grid-template-columns: 1fr 1fr; gap: 42px; align-items: start; }
+@media (max-width: 820px) { .pdp { grid-template-columns: 1fr; gap: 26px; } }
+
+.pdp-media {
+  position: relative; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); min-height: 420px; display: grid; place-items: center;
+  overflow: hidden;
+  background-image: radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--yarn) 26%, var(--card)) 0 44%, transparent 45%);
+}
+.pdp-media .setwrap { display: flex; align-items: flex-end; gap: 6px; }
+.pdp-media img.pimg { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+.pdp-media .badge { position: absolute; top: 14px; left: 14px; background: var(--accent); color: var(--accent-ink); font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 4px 11px; }
+.pdp-media .badge.sale { background: var(--yarn-medus); color: #3A2C23; }
+
+.pdp-info h1 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); font-weight: 700; }
+.pdp-cat { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+.pdp-price { font-family: var(--display); font-weight: 700; font-size: 1.8rem; margin: 14px 0 4px; }
+.pdp-price s { color: var(--ink-soft); font-weight: 600; font-size: 1.1rem; margin-right: 10px; }
+.pdp-price .save { font-size: .8rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 3px 10px; margin-left: 8px; vertical-align: middle; }
+.pdp-desc { color: var(--ink-soft); margin: 14px 0 22px; max-width: 52ch; line-height: 1.6; }
+
+.buy-label { font-family: var(--display); font-weight: 700; font-size: .9rem; margin: 0 0 8px; display: flex; align-items: baseline; gap: 10px; }
+.buy-label .req { font-family: var(--body); font-size: .74rem; font-weight: 600; color: var(--accent); }
+.sizes { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.size-btn {
+  border: 1.5px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer;
+  border-radius: 12px; padding: 9px 14px; font-size: .86rem; font-weight: 600; font-family: var(--body);
+}
+.size-btn:hover { border-color: var(--accent); }
+.size-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+
+.buy-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.stepper { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; background: var(--card); }
+.stepper button { width: 30px; height: 30px; border: none; background: none; cursor: pointer; font-weight: 700; font-size: 1.1rem; color: var(--ink); font-family: var(--display); }
+.stepper span { min-width: 26px; text-align: center; font-weight: 700; font-family: var(--display); font-variant-numeric: tabular-nums; }
+.add-cart { flex: 1; min-width: 200px; justify-content: center; }
+.buy-error { color: var(--accent); font-size: .82rem; font-weight: 600; margin: 10px 0 0; min-height: 16px; }
+
+.specs { list-style: none; padding: 0; margin: 26px 0 0; border-top: 1px solid var(--line); }
+.specs div { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: .88rem; }
+.specs dt { color: var(--ink-soft); }
+.specs dd { margin: 0; font-weight: 600; text-align: right; }
+
+.ship-note { display: flex; gap: 10px; align-items: flex-start; margin-top: 20px; font-size: .84rem; color: var(--ink-soft); background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.ship-note b { color: var(--ink); font-family: var(--display); }
+
+/* related */
+.related { padding: 40px 0 60px; }
+.related h2 { font-size: 1.4rem; margin-bottom: 18px; }
+.rel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.rel-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform .15s ease, box-shadow .15s ease; }
+.rel-card:hover { transform: translateY(-4px); box-shadow: 0 12px 26px var(--shadow); }
+.rel-card .ph { position: relative; padding: 20px 0 8px; display: grid; place-items: center; min-height: 140px; background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--yarn) 28%, var(--card)) 0 46%, transparent 47%), var(--card); }
+.rel-card .ph .pimg { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+.rel-card .rbody { padding: 4px 14px 14px; }
+.rel-card h3 { font-size: .92rem; font-weight: 600; }
+.rel-card .price { font-family: var(--display); font-weight: 700; margin-top: 4px; }
+.rel-card .price s { color: var(--ink-soft); font-weight: 600; font-size: .78rem; margin-right: 5px; }
+
+.notfound { text-align: center; padding: 70px 20px; }
+.notfound h1 { font-size: 1.6rem; margin-bottom: 10px; }
+.notfound p { color: var(--ink-soft); margin-bottom: 20px; }

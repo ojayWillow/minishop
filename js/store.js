@@ -81,12 +81,15 @@
       var price = p.oldPrice
         ? '<span class="price"><s>' + p.oldPrice + '&nbsp;€</s>' + p.price + '&nbsp;€</span>'
         : '<span class="price">' + p.price + '&nbsp;€</span>';
+      var href = 'product.html?id=' + p.id;
       return '<article class="product" style="--yarn: var(--yarn-' + p.color + ')">' +
-        '<div class="ph">' + badgeFor(p) + MiniMe.productArtHTML(p) + '</div>' +
-        '<div class="pinfo"><h3>' + MiniMe.escapeAttr(p.name) + '</h3>' +
-        '<p class="meta">' + CATS[p.cat] + ' · ' + p.sizes.join(', ') + '</p>' +
-        '<div class="buy">' + price + '<button class="add" data-id="' + p.id + '">Grozā +</button></div>' +
-        '</div></article>';
+        '<a class="plink" href="' + href + '">' +
+          '<div class="ph">' + badgeFor(p) + MiniMe.productArtHTML(p) + '</div>' +
+          '<div class="pinfo"><h3>' + MiniMe.escapeAttr(p.name) + '</h3>' +
+          '<p class="meta">' + CATS[p.cat] + ' · ' + p.sizes.join(', ') + '</p></div>' +
+        '</a>' +
+        '<div class="buy">' + price + '<a class="add" href="' + href + '">Izvēlēties →</a></div>' +
+        '</article>';
     }).join('');
     var n = items.length;
     var one = n % 10 === 1 && n % 100 !== 11;
@@ -205,15 +208,6 @@
   var filters = document.getElementById('filters');
   document.getElementById('fopen').addEventListener('click', function () { filters.classList.add('open'); });
   document.getElementById('fclose').addEventListener('click', function () { filters.classList.remove('open'); });
-
-  /* cart (front-end demo) */
-  grid.addEventListener('click', function (e) {
-    var btn = e.target.closest('.add');
-    if (!btn) return;
-    MiniMeCart.add();
-    btn.textContent = 'Pievienots ✓';
-    setTimeout(function () { btn.textContent = 'Grozā +'; }, 1200);
-  });
 
   /* deep link: store.html#komplekti preselects the Mini Me sets category */
   if (location.hash === '#komplekti') {

@@ -115,7 +115,37 @@ window.MiniMe = (function () {
     return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
+  function findById(id) {
+    id = parseInt(id, 10);
+    var list = getProducts();
+    for (var i = 0; i < list.length; i++) { if (list[i].id === id) return list[i]; }
+    return null;
+  }
+
+  /* Natural-material guess used in product descriptions and spec rows. */
+  function material(p) {
+    var s = p.season || [];
+    if (s.length === 1 && s[0] === 'vasara') return 'kokvilna';
+    return 'merīnvilna';
+  }
+
+  /* A short Latvian description composed from the product's own attributes,
+     so every item reads consistently without hand-writing 28 blurbs. */
+  function description(p) {
+    var base = {
+      beanie: 'Mīksta, rokām adīta cepure',
+      set: 'Mini Me komplekts — divas vienādas cepures, viena tev un otra tavam mazajam',
+      scarf: 'Silta, rokām adīta šalle',
+      mittens: 'Rokām adīti cimdi mazām rociņām',
+      headband: 'Rokām adīta galvas lente'
+    }[p.type] || 'Rokām adīts izstrādājums';
+    var seasonTxt = (p.season || []).map(function (x) { return SEASONS[x]; }).join(', ');
+    return base + ' no dabīgas ' + material(p) + '. Adīts Rīgā ar rūpību par katru valdziņu' +
+      (seasonTxt ? '. Piemērots sezonai: ' + seasonTxt : '') + '.';
+  }
+
   return {
+    findById: findById, material: material, description: description,
     CATS: CATS, SEASONS: SEASONS, COLORS: COLORS, SIZES: SIZES, TYPES: TYPES,
     DEFAULT_PRODUCTS: DEFAULT_PRODUCTS,
     getProducts: getProducts, saveProducts: saveProducts, resetProducts: resetProducts,

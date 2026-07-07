@@ -16,7 +16,7 @@
       var price = p.oldPrice
         ? '<span class="price"><s>' + p.oldPrice + '&nbsp;€</s>' + p.price + '&nbsp;€</span>'
         : '<span class="price">' + p.price + '&nbsp;€</span>';
-      return '<a class="fcard" href="store.html" style="--yarn: var(--yarn-' + p.color + ')">' +
+      return '<a class="fcard" href="product.html?id=' + p.id + '" style="--yarn: var(--yarn-' + p.color + ')">' +
         '<div class="ph">' + MiniMe.productArtHTML(p) + '</div>' +
         '<div class="fbody">' +
           '<h3>' + MiniMe.escapeAttr(p.name) + '</h3>' +

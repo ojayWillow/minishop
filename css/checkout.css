@@ -1,0 +1,84 @@
+/* ==========================================================================
+   Mini Me — checkout.css
+   One-page checkout: step ribbon, contact/delivery/payment form, sticky
+   order summary, and the confirmation screen.
+   ========================================================================== */
+.co-wrap { padding: 24px 0 60px; }
+.co-title { font-size: clamp(1.6rem, 3.4vw, 2.1rem); font-weight: 700; margin-bottom: 6px; }
+
+/* step ribbon */
+.steps { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 14px 0 26px; padding: 0; list-style: none; }
+.steps li { display: flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 600; color: var(--ink-soft); }
+.steps li .num { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .74rem; background: var(--accent-soft); color: var(--ink); font-family: var(--display); font-weight: 700; }
+.steps li[aria-current] { color: var(--ink); }
+.steps li[aria-current] .num { background: var(--accent); color: var(--accent-ink); }
+
+.checkout { display: grid; grid-template-columns: 1.25fr .85fr; gap: 30px; align-items: start; }
+@media (max-width: 860px) { .checkout { grid-template-columns: 1fr; } }
+
+/* form */
+.co-section { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 22px 24px; margin-bottom: 18px; }
+.co-section h2 { font-size: 1.15rem; margin-bottom: 4px; }
+.co-section .sub { color: var(--ink-soft); font-size: .84rem; margin: 0 0 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.field label { font-size: .8rem; font-weight: 700; color: var(--ink-soft); font-family: var(--display); }
+.field input, .field textarea, .field select {
+  border: 1px solid var(--line); background: var(--ground); color: var(--ink);
+  border-radius: 12px; padding: 11px 13px; font-size: .95rem; font-family: var(--body); width: 100%;
+}
+.field input:focus, .field textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.field.invalid input, .field.invalid textarea { border-color: var(--accent); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 520px) { .grid2 { grid-template-columns: 1fr; } }
+.err { color: var(--accent); font-size: .78rem; font-weight: 600; min-height: 14px; }
+
+/* option cards (delivery / payment) */
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt-card { display: flex; align-items: center; gap: 12px; border: 1.5px solid var(--line); background: var(--ground); border-radius: 14px; padding: 13px 15px; cursor: pointer; }
+.opt-card:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
+.opt-card input { accent-color: var(--accent); width: 18px; height: 18px; flex: none; }
+.opt-card.sel { border-color: var(--accent); background: var(--accent-soft); }
+.opt-card .oc-main { flex: 1; }
+.opt-card .oc-main b { font-family: var(--display); font-size: .95rem; }
+.opt-card .oc-main p { margin: 2px 0 0; font-size: .78rem; color: var(--ink-soft); }
+.opt-card .oc-price { font-family: var(--display); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.terms { display: flex; align-items: flex-start; gap: 10px; font-size: .84rem; color: var(--ink-soft); margin-top: 6px; }
+.terms input { accent-color: var(--accent); width: 17px; height: 17px; margin-top: 2px; flex: none; }
+
+.place { width: 100%; justify-content: center; font-size: 1.02rem; padding: 14px 24px; margin-top: 6px; }
+
+/* order summary */
+.summary { position: sticky; top: 84px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 20px 22px; }
+.summary h2 { font-size: 1.1rem; margin-bottom: 14px; }
+.sum-line { display: grid; grid-template-columns: 46px 1fr auto; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); align-items: center; }
+.sum-line .st { width: 46px; height: 46px; border-radius: 10px; overflow: hidden; display: grid; place-items: center; background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--yarn) 28%, var(--card)) 0 46%, transparent 47%), var(--ground); }
+.sum-line .st img { width: 100%; height: 100%; object-fit: cover; }
+.sum-line .sm h3 { font-size: .84rem; font-weight: 600; }
+.sum-line .sm p { margin: 2px 0 0; font-size: .74rem; color: var(--ink-soft); }
+.sum-line .sp { font-family: var(--display); font-weight: 700; font-variant-numeric: tabular-nums; font-size: .9rem; }
+.sum-totals { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; font-size: .9rem; }
+.sum-totals .r { display: flex; justify-content: space-between; color: var(--ink-soft); }
+.sum-totals .r.grand { color: var(--ink); font-family: var(--display); font-weight: 700; font-size: 1.2rem; border-top: 1px solid var(--line); padding-top: 10px; margin-top: 2px; }
+.sum-totals .r b { font-variant-numeric: tabular-nums; }
+.free-hint { font-size: .76rem; color: var(--ink-soft); margin: 8px 0 0; }
+.free-hint.ok { color: color-mix(in srgb, var(--yarn-salvija) 70%, var(--ink)); font-weight: 600; }
+
+/* empty + confirmation */
+.co-empty { text-align: center; padding: 70px 20px; }
+.co-empty h1 { font-size: 1.6rem; margin-bottom: 10px; }
+.co-empty p { color: var(--ink-soft); margin-bottom: 20px; }
+
+.confirm { max-width: 640px; margin: 0 auto; text-align: center; padding: 30px 0 60px; }
+.confirm .tick { width: 66px; height: 66px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 2rem; margin: 0 auto 18px; }
+.confirm h1 { font-size: 1.9rem; margin-bottom: 8px; }
+.confirm .lead { color: var(--ink-soft); margin-bottom: 6px; }
+.confirm .orderno { font-family: var(--display); font-weight: 700; font-size: 1.15rem; margin: 4px 0 24px; }
+.confirm-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; text-align: left; margin-bottom: 18px; }
+.confirm-card h2 { font-size: 1rem; margin-bottom: 12px; }
+.confirm-card .r { display: flex; justify-content: space-between; gap: 14px; padding: 7px 0; font-size: .9rem; border-bottom: 1px solid var(--line); }
+.confirm-card .r:last-child { border-bottom: none; }
+.confirm-card .r span:first-child { color: var(--ink-soft); }
+.confirm-card .r b { font-variant-numeric: tabular-nums; }
+.pay-instructions { background: var(--accent-soft); border-radius: 14px; padding: 16px 18px; font-size: .88rem; line-height: 1.6; margin-top: 14px; text-align: left; }
+.pay-instructions b { font-family: var(--display); }
