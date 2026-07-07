@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vēlmju saraksts — Mini Me</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+
+<div class="ribbon" data-ribbon>Bezmaksas piegāde Omniva pakomātā pasūtījumiem virs 40&nbsp;€ · Adīts ar rokām Rīgā</div>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="logo" href="index.html">mini&nbsp;me <span class="pom"></span> <small data-i18n="logo.sub">cepures · Rīga</small></a>
+    <nav class="main" aria-label="Navigācija">
+      <a href="index.html" data-i18n="nav.home">Sākums</a>
+      <a href="store.html" data-i18n="nav.shop">Veikals</a>
+      <a href="index.html#par-mums" data-i18n="nav.about">Par mums</a>
+      <a href="index.html#kontakti" data-i18n="nav.contact">Kontakti</a>
+    </nav>
+    <div class="hdr-actions">
+      <button class="lang-btn" data-lang-switch>EN</button>
+      <a class="wish-btn" href="wishlist.html" aria-current="page" data-i18n-title="wl.h1" title="Vēlmju saraksts" aria-label="Vēlmju saraksts">♥ <span class="count" data-wish-count>0</span></a>
+      <button class="cart" data-cart-open aria-label="Grozs"><span data-i18n="cart.btn">Grozs</span> <span class="count" data-cart-count>0</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap pagehead">
+  <p class="crumbs"><a href="index.html" data-i18n="store.crumb">Sākums</a> / <b data-i18n="wl.h1">Vēlmju saraksts</b></p>
+  <h1 data-i18n="wl.h1">Vēlmju saraksts</h1>
+  <p class="sub" data-i18n="wl.sub">Tavas saglabātās preces. Tās paliek šajā pārlūkā.</p>
+</div>
+
+<main class="wrap" style="padding: 20px 20px 60px">
+  <div class="grid" id="wlGrid"></div>
+  <div class="empty" id="wlEmpty" hidden>
+    <h3 data-i18n="wl.empty.h">Tavs vēlmju saraksts ir tukšs</h3>
+    <p data-i18n="wl.empty.p">Nospied ♡ uz jebkuras preces, lai to saglabātu šeit.</p>
+    <a class="btn" href="store.html" data-i18n="wl.empty.btn">Uz veikalu</a>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="copyright">
+      <span>© <span data-year>2026</span> Mini Me · minimeshop.lv · Rīga, Latvija</span>
+      <span><a href="store.html" data-i18n="footer.back">Atpakaļ uz veikalu</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/icons.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
+<script src="js/site.js"></script>
+<script>
+/* wishlist page renderer: shows saved products; hearts remove live */
+(function () {
+  var grid = document.getElementById('wlGrid');
+  var empty = document.getElementById('wlEmpty');
+
+  function render() {
+    var ids = MiniMeWish.ids();
+    var items = ids.map(function (id) { return MiniMe.findById(id); }).filter(Boolean);
+    empty.hidden = items.length > 0;
+    grid.innerHTML = items.map(function (p) {
+      var price = p.oldPrice
+        ? '<span class="price"><s>' + p.oldPrice + '&nbsp;€</s>' + p.price + '&nbsp;€</span>'
+        : '<span class="price">' + p.price + '&nbsp;€</span>';
+      var href = 'product.html?id=' + p.id;
+      return '<article class="product" style="--yarn: var(--yarn-' + p.color + ')">' +
+        '<button class="wish-heart" data-wish="' + p.id + '" aria-label="♥">♥</button>' +
+        '<a class="plink" href="' + href + '">' +
+          '<div class="ph">' + MiniMe.productArtHTML(p) + '</div>' +
+          '<div class="pinfo"><h3>' + MiniMe.escapeAttr(p.name) + '</h3>' +
+          '<p class="meta">' + MiniMe.CATS[p.cat] + '</p></div>' +
+        '</a>' +
+        '<div class="buy">' + price + '<a class="qa-btn" href="' + href + '">' + T('wl.view', 'Skatīt →') + '</a></div>' +
+      '</article>';
+    }).join('');
+    MiniMeWish.bind(grid);
+  }
+
+  MiniMeWish.onChange(render);
+  render();
+})();
+</script>
+</body>
+</html>

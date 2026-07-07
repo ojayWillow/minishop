@@ -10,16 +10,19 @@
 </head>
 <body>
 
-<div class="ribbon">Droša apmaksa · Adīts ar rokām Rīgā</div>
+<div class="ribbon" data-i18n="ribbon.checkout">Droša apmaksa · Adīts ar rokām Rīgā</div>
 
 <header class="site">
   <div class="wrap bar">
-    <a class="logo" href="index.html">mini&nbsp;me <span class="pom"></span> <small>cepures · Rīga</small></a>
-    <nav class="main" aria-label="Galvenā navigācija">
-      <a href="index.html">Sākums</a>
-      <a href="store.html">Veikals</a>
+    <a class="logo" href="index.html">mini&nbsp;me <span class="pom"></span> <small data-i18n="logo.sub">cepures · Rīga</small></a>
+    <nav class="main" aria-label="Navigācija">
+      <a href="index.html" data-i18n="nav.home">Sākums</a>
+      <a href="store.html" data-i18n="nav.shop">Veikals</a>
     </nav>
-    <button class="cart" data-cart-open style="margin-left:auto" aria-label="Atvērt grozu">Grozs <span class="count" data-cart-count>0</span></button>
+    <div class="hdr-actions">
+      <button class="lang-btn" data-lang-switch>EN</button>
+      <button class="cart" data-cart-open aria-label="Grozs"><span data-i18n="cart.btn">Grozs</span> <span class="count" data-cart-count>0</span></button>
+    </div>
   </div>
 </header>
 
@@ -31,12 +34,13 @@
   <div class="wrap">
     <div class="copyright">
       <span>© <span data-year>2026</span> Mini Me · minimeshop.lv · Rīga, Latvija</span>
-      <span><a href="store.html">Atpakaļ uz veikalu</a></span>
+      <span><a href="store.html" data-i18n="footer.back">Atpakaļ uz veikalu</a></span>
     </div>
   </div>
 </footer>
 
 <script src="js/icons.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/site.js"></script>

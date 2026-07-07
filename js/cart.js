@@ -2,7 +2,8 @@
    Mini Me — cart.js
    The shopping basket: a localStorage-backed line-item cart plus a slide-in
    drawer shared by every shop page. Line items carry the chosen size and
-   quantity — a real basket, not just a counter.
+   quantity. Includes the live free-shipping progress bar and keeps the
+   announcement ribbon in sync ("add X € more for free delivery").
 
    Front-end only: the cart lives in the browser. Checkout collects the order
    and (for bank transfer) shows payment details; card payment needs a payment
@@ -10,7 +11,10 @@
    ========================================================================== */
 window.MiniMeCart = (function () {
   var KEY = 'minime_cart_v1';
+  var FREE_FROM = 40;
   var listeners = [];
+
+  function money(n) { return (n % 1 === 0 ? String(n) : n.toFixed(2).replace('.', ',')) + ' €'; }
 
   function read() {
     try {
@@ -25,6 +29,7 @@ window.MiniMeCart = (function () {
   }
   function emit() {
     paintBadges();
+    paintRibbon();
     listeners.forEach(function (fn) { try { fn(); } catch (e) {} });
   }
 
@@ -66,10 +71,36 @@ window.MiniMeCart = (function () {
   function clear() { write([]); }
   function onChange(fn) { listeners.push(fn); }
 
-  /* ---------- badges ---------- */
+  /* ---------- badges + live ribbon ---------- */
   function paintBadges() {
     var n = count();
     document.querySelectorAll('[data-cart-count]').forEach(function (el) { el.textContent = n; });
+  }
+  function paintRibbon() {
+    var el = document.querySelector('[data-ribbon]');
+    if (!el) return;
+    var s = subtotal();
+    if (s <= 0) {
+      el.innerHTML = T('ribbon.default', 'Bezmaksas piegāde Omniva pakomātā pasūtījumiem virs 40&nbsp;€ · Adīts ar rokām Rīgā');
+    } else if (s >= FREE_FROM) {
+      el.innerHTML = T('ribbon.free', 'Tavam pasūtījumam piegāde ir bez maksas ✓ · Adīts ar rokām Rīgā');
+    } else {
+      el.innerHTML = TF('ribbon.progress',
+        'Vēl {x} līdz bezmaksas piegādei · Adīts ar rokām Rīgā', { x: money(FREE_FROM - s) });
+    }
+  }
+
+  /* ---------- free-shipping progress (drawer) ---------- */
+  function progressHTML() {
+    var s = subtotal();
+    var pct = Math.min(100, Math.round(s / FREE_FROM * 100));
+    var label = s >= FREE_FROM
+      ? T('cart.free', '✓ Piegāde bez maksas')
+      : TF('cart.progress', 'Pievieno vēl {x}, un piegāde būs bez maksas', { x: money(FREE_FROM - s) });
+    return '<div class="ship-progress' + (s >= FREE_FROM ? ' done' : '') + '">' +
+      '<p>' + label + '</p>' +
+      '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '">' +
+        '<span style="width:' + pct + '%"></span></div></div>';
   }
 
   /* ---------- drawer ---------- */
@@ -83,11 +114,11 @@ window.MiniMeCart = (function () {
 
     drawer = document.createElement('aside');
     drawer.className = 'cart-drawer';
-    drawer.setAttribute('aria-label', 'Iepirkumu grozs');
+    drawer.setAttribute('aria-label', T('cart.title', 'Iepirkumu grozs'));
     drawer.setAttribute('role', 'dialog');
     drawer.setAttribute('aria-modal', 'true');
     drawer.innerHTML =
-      '<div class="cart-head"><h2>Grozs</h2><button class="cart-x" aria-label="Aizvērt">✕</button></div>' +
+      '<div class="cart-head"><h2>' + T('cart.title', 'Grozs') + '</h2><button class="cart-x" aria-label="Aizvērt">✕</button></div>' +
       '<div class="cart-body" data-cart-body></div>' +
       '<div class="cart-foot" data-cart-foot></div>';
 
@@ -113,32 +144,32 @@ window.MiniMeCart = (function () {
     if (!drawer) return;
     var rows = detailed();
     if (!rows.length) {
-      bodyEl.innerHTML = '<div class="cart-empty"><p>Tavs grozs ir tukšs.</p>' +
-        '<a class="btn" href="store.html">Uz veikalu</a></div>';
+      bodyEl.innerHTML = '<div class="cart-empty"><p>' + T('cart.empty', 'Tavs grozs ir tukšs.') + '</p>' +
+        '<a class="btn" href="store.html">' + T('cart.toShop', 'Uz veikalu') + '</a></div>';
       footEl.innerHTML = '';
       return;
     }
-    bodyEl.innerHTML = rows.map(function (r, i) {
+    bodyEl.innerHTML = progressHTML() + rows.map(function (r, i) {
       return '<div class="cart-line" data-idx="' + i + '">' +
-        '<div class="cart-thumb" style="--yarn: var(--yarn-' + r.product.color + ')">' + MiniMe.productArtHTML(r.product) + '</div>' +
+        '<a class="cart-thumb" href="product.html?id=' + r.id + '" style="--yarn: var(--yarn-' + r.product.color + ')">' + MiniMe.productArtHTML(r.product) + '</a>' +
         '<div class="cart-info">' +
           '<h3>' + MiniMe.escapeAttr(r.product.name) + '</h3>' +
-          '<p class="cart-size">Izmērs: <b>' + (MiniMe.SIZES[r.size] || r.size) + '</b></p>' +
+          '<p class="cart-size">' + T('cart.sizeLbl', 'Izmērs') + ': <b>' + (MiniMe.SIZES[r.size] || r.size) + '</b></p>' +
           '<div class="cart-qty">' +
-            '<button data-dec aria-label="Mazāk">−</button>' +
+            '<button data-dec aria-label="−">−</button>' +
             '<span>' + r.qty + '</span>' +
-            '<button data-inc aria-label="Vairāk">+</button>' +
-            '<button class="cart-remove" data-remove aria-label="Noņemt">Noņemt</button>' +
+            '<button data-inc aria-label="+">+</button>' +
+            '<button class="cart-remove" data-remove>' + T('cart.remove', 'Noņemt') + '</button>' +
           '</div>' +
         '</div>' +
-        '<div class="cart-price">' + (r.lineTotal) + '&nbsp;€</div>' +
+        '<div class="cart-price">' + money(r.lineTotal) + '</div>' +
       '</div>';
     }).join('');
     footEl.innerHTML =
-      '<div class="cart-sub"><span>Starpsumma</span><b>' + subtotal() + '&nbsp;€</b></div>' +
-      '<p class="cart-note">Piegāde tiek aprēķināta apmaksas solī.</p>' +
-      '<a class="btn cart-checkout" href="checkout.html">Uz apmaksu →</a>' +
-      '<a class="cart-continue" href="store.html">Turpināt iepirkšanos</a>';
+      '<div class="cart-sub"><span>' + T('cart.subtotal', 'Starpsumma') + '</span><b>' + money(subtotal()) + '</b></div>' +
+      '<p class="cart-note">' + T('cart.note', 'Piegāde tiek aprēķināta apmaksas solī.') + '</p>' +
+      '<a class="btn cart-checkout" href="checkout.html">' + T('cart.checkout', 'Uz apmaksu →') + '</a>' +
+      '<a class="cart-continue" href="store.html">' + T('cart.continue', 'Turpināt iepirkšanos') + '</a>';
   }
 
   function open() {
@@ -159,6 +190,7 @@ window.MiniMeCart = (function () {
 
   function ready() {
     paintBadges();
+    paintRibbon();
     document.querySelectorAll('[data-cart-open]').forEach(function (el) {
       el.addEventListener('click', function (e) { e.preventDefault(); open(); });
     });
@@ -169,6 +201,6 @@ window.MiniMeCart = (function () {
   return {
     items: items, detailed: detailed, count: count, subtotal: subtotal,
     add: add, setQty: setQty, removeAt: removeAt, clear: clear,
-    onChange: onChange, open: open, close: close
+    onChange: onChange, open: open, close: close, FREE_FROM: FREE_FROM
   };
 })();

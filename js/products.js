@@ -15,7 +15,19 @@
 window.MiniMe = (function () {
   var STORAGE_KEY = 'minime_products_v1';
 
-  var CATS = {
+  /* Language for the taxonomy labels. i18n.js persists the choice; reading the
+     key directly here keeps this module dependency-free. */
+  var LANG = 'lv';
+  try { LANG = localStorage.getItem('minime_lang') === 'en' ? 'en' : 'lv'; } catch (e) {}
+
+  var CATS = LANG === 'en' ? {
+    'bernu-cepures': 'Kids’ hats',
+    'pieauguso-cepures': 'Adult hats',
+    'komplekti': 'Mini Me sets',
+    'salles': 'Scarves',
+    'cimdi': 'Mittens',
+    'lentes': 'Headbands'
+  } : {
     'bernu-cepures': 'Bērnu cepures',
     'pieauguso-cepures': 'Pieaugušo cepures',
     'komplekti': 'Mini Me komplekti',
@@ -23,16 +35,26 @@ window.MiniMe = (function () {
     'cimdi': 'Cimdi',
     'lentes': 'Galvas lentes'
   };
-  var SEASONS = { 'ziema': 'Ziema', 'pavasaris-rudens': 'Pavasaris / Rudens', 'vasara': 'Vasara' };
-  var COLORS = {
+  var SEASONS = LANG === 'en'
+    ? { 'ziema': 'Winter', 'pavasaris-rudens': 'Spring / Autumn', 'vasara': 'Summer' }
+    : { 'ziema': 'Ziema', 'pavasaris-rudens': 'Pavasaris / Rudens', 'vasara': 'Vasara' };
+  var COLORS = LANG === 'en' ? {
+    roza: 'Pink', zila: 'Blue', salvija: 'Sage green', medus: 'Honey',
+    mals: 'Clay', peleka: 'Grey', kremkrasa: 'Cream', cerinu: 'Lilac'
+  } : {
     roza: 'Rozā', zila: 'Zila', salvija: 'Salvijas zaļa', medus: 'Medus',
     mals: 'Māla', peleka: 'Pelēka', kremkrasa: 'Krēmkrāsa', cerinu: 'Ceriņu'
   };
-  var SIZES = {
+  var SIZES = LANG === 'en' ? {
+    '0-6m': '0–6 mo.', '6-12m': '6–12 mo.', '1-2g': '1–2 yrs', '2-4g': '2–4 yrs',
+    '4-8g': '4–8 yrs', '8-12g': '8–12 yrs', 'S/M': 'Adult S/M', 'L/XL': 'Adult L/XL'
+  } : {
     '0-6m': '0–6 mēn.', '6-12m': '6–12 mēn.', '1-2g': '1–2 gadi', '2-4g': '2–4 gadi',
     '4-8g': '4–8 gadi', '8-12g': '8–12 gadi', 'S/M': 'Pieaugušo S/M', 'L/XL': 'Pieaugušo L/XL'
   };
-  var TYPES = { beanie: 'Cepure', scarf: 'Šalle', mittens: 'Cimdi', headband: 'Galvas lente', set: 'Komplekts' };
+  var TYPES = LANG === 'en'
+    ? { beanie: 'Hat', scarf: 'Scarf', mittens: 'Mittens', headband: 'Headband', set: 'Set' }
+    : { beanie: 'Cepure', scarf: 'Šalle', mittens: 'Cimdi', headband: 'Galvas lente', set: 'Komplekts' };
 
   // type: beanie | scarf | mittens | headband | set
   var DEFAULT_PRODUCTS = [
@@ -129,9 +151,22 @@ window.MiniMe = (function () {
     return 'merīnvilna';
   }
 
-  /* A short Latvian description composed from the product's own attributes,
-     so every item reads consistently without hand-writing 28 blurbs. */
+  /* A short description composed from the product's own attributes, so every
+     item reads consistently without hand-writing 28 blurbs. Localised. */
   function description(p) {
+    var seasonTxt = (p.season || []).map(function (x) { return SEASONS[x]; }).join(', ');
+    if (LANG === 'en') {
+      var baseEn = {
+        beanie: 'A soft, hand-knitted hat',
+        set: 'A Mini Me set — two matching hats, one for you and one for your little one',
+        scarf: 'A warm, hand-knitted scarf',
+        mittens: 'Hand-knitted mittens for little hands',
+        headband: 'A hand-knitted headband'
+      }[p.type] || 'A hand-knitted piece';
+      var matEn = material(p) === 'kokvilna' ? 'cotton' : 'merino wool';
+      return baseEn + ' made of natural ' + matEn + '. Knitted in Riga with care in every stitch' +
+        (seasonTxt ? '. Suited for: ' + seasonTxt : '') + '.';
+    }
     var base = {
       beanie: 'Mīksta, rokām adīta cepure',
       set: 'Mini Me komplekts — divas vienādas cepures, viena tev un otra tavam mazajam',
@@ -139,7 +174,6 @@ window.MiniMe = (function () {
       mittens: 'Rokām adīti cimdi mazām rociņām',
       headband: 'Rokām adīta galvas lente'
     }[p.type] || 'Rokām adīts izstrādājums';
-    var seasonTxt = (p.season || []).map(function (x) { return SEASONS[x]; }).join(', ');
     return base + ' no dabīgas ' + material(p) + '. Adīts Rīgā ar rūpību par katru valdziņu' +
       (seasonTxt ? '. Piemērots sezonai: ' + seasonTxt : '') + '.';
   }

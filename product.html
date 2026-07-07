@@ -9,18 +9,22 @@
 </head>
 <body>
 
-<div class="ribbon">Bezmaksas piegāde Omniva pakomātā pasūtījumiem virs 40&nbsp;€ · Adīts ar rokām Rīgā</div>
+<div class="ribbon" data-ribbon>Bezmaksas piegāde Omniva pakomātā pasūtījumiem virs 40&nbsp;€ · Adīts ar rokām Rīgā</div>
 
 <header class="site">
   <div class="wrap bar">
-    <a class="logo" href="index.html">mini&nbsp;me <span class="pom"></span> <small>cepures · Rīga</small></a>
-    <nav class="main" aria-label="Galvenā navigācija">
-      <a href="index.html">Sākums</a>
-      <a href="store.html">Veikals</a>
-      <a href="index.html#par-mums">Par mums</a>
-      <a href="index.html#kontakti">Kontakti</a>
+    <a class="logo" href="index.html">mini&nbsp;me <span class="pom"></span> <small data-i18n="logo.sub">cepures · Rīga</small></a>
+    <nav class="main" aria-label="Navigācija">
+      <a href="index.html" data-i18n="nav.home">Sākums</a>
+      <a href="store.html" data-i18n="nav.shop">Veikals</a>
+      <a href="index.html#par-mums" data-i18n="nav.about">Par mums</a>
+      <a href="index.html#kontakti" data-i18n="nav.contact">Kontakti</a>
     </nav>
-    <button class="cart" data-cart-open style="margin-left:auto" aria-label="Atvērt grozu">Grozs <span class="count" data-cart-count>0</span></button>
+    <div class="hdr-actions">
+      <button class="lang-btn" data-lang-switch>EN</button>
+      <a class="wish-btn" href="wishlist.html" data-i18n-title="wl.h1" title="Vēlmju saraksts" aria-label="Vēlmju saraksts">♡ <span class="count" data-wish-count>0</span></a>
+      <button class="cart" data-cart-open aria-label="Grozs"><span data-i18n="cart.btn">Grozs</span> <span class="count" data-cart-count>0</span></button>
+    </div>
   </div>
 </header>
 
@@ -29,7 +33,7 @@
 </main>
 
 <section class="wrap related" id="related" hidden>
-  <h2>Tev varētu patikt</h2>
+  <h2 data-i18n="pdp.related">Tev varētu patikt</h2>
   <div class="rel-grid" id="relGrid"></div>
 </section>
 
@@ -64,8 +68,10 @@
 </footer>
 
 <script src="js/icons.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
 <script src="js/site.js"></script>
 <script src="js/product.js"></script>
 </body>

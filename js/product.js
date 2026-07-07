@@ -1,7 +1,8 @@
 /* ==========================================================================
    Mini Me — product.js
    Product detail page: reads ?id, renders the buy box (size + quantity),
-   adds the line to the cart, and shows related items.
+   adds the line to the cart, wishlist heart, related items, and JSON-LD
+   structured data for SEO. Localised via I18N/T().
    ========================================================================== */
 (function () {
   var host = document.getElementById('pdp');
@@ -13,10 +14,10 @@
   var p = MiniMe.findById(param('id'));
 
   if (!p) {
-    host.innerHTML = '<div class="notfound"><h1>Produkts nav atrasts</h1>' +
-      '<p>Iespējams, tas ir noņemts vai saite ir novecojusi.</p>' +
-      '<a class="btn" href="store.html">Atpakaļ uz veikalu</a></div>';
-    document.title = 'Produkts nav atrasts — Mini Me';
+    host.innerHTML = '<div class="notfound"><h1>' + T('pdp.nf.h', 'Produkts nav atrasts') + '</h1>' +
+      '<p>' + T('pdp.nf.p', 'Iespējams, tas ir noņemts vai saite ir novecojusi.') + '</p>' +
+      '<a class="btn" href="store.html">' + T('pdp.nf.btn', 'Atpakaļ uz veikalu') + '</a></div>';
+    document.title = T('pdp.nf.h', 'Produkts nav atrasts') + ' — Mini Me';
     return;
   }
 
@@ -25,9 +26,11 @@
   var state = { size: null, qty: 1 };
 
   function media() {
-    var badge = p.oldPrice ? '<span class="badge sale">Akcija</span>'
-      : (p.isNew ? '<span class="badge">Jaunums</span>' : '');
-    return '<div class="pdp-media" style="--yarn: var(--yarn-' + p.color + ')">' + badge + bigArt() + '</div>';
+    var badge = p.oldPrice ? '<span class="badge sale">' + T('badge.sale', 'Akcija') + '</span>'
+      : (p.isNew ? '<span class="badge">' + T('badge.new', 'Jaunums') + '</span>' : '');
+    return '<div class="pdp-media" style="--yarn: var(--yarn-' + p.color + ')">' + badge +
+      '<button class="wish-heart" data-wish="' + p.id + '" aria-label="♡" style="top:14px;right:14px">♡</button>' +
+      bigArt() + '</div>';
   }
   function bigArt() {
     if (p.image) return '<img class="pimg" src="' + p.image + '" alt="' + MiniMe.escapeAttr(p.name) + '">';
@@ -57,17 +60,17 @@
   function specs() {
     var seasonTxt = (p.season || []).map(function (x) { return MiniMe.SEASONS[x]; }).join(', ');
     return '<dl class="specs">' +
-      row('Kategorija', MiniMe.CATS[p.cat]) +
-      row('Materiāls', MiniMe.material(p) === 'kokvilna' ? 'Kokvilna' : 'Merīnvilna') +
-      row('Sezona', seasonTxt) +
-      row('Krāsa', MiniMe.COLORS[p.color]) +
-      row('Pieejamie izmēri', p.sizes.map(function (s) { return MiniMe.SIZES[s] || s; }).join(', ')) +
+      row(T('spec.cat', 'Kategorija'), MiniMe.CATS[p.cat]) +
+      row(T('spec.material', 'Materiāls'), MiniMe.material(p) === 'kokvilna' ? T('mat.cotton', 'Kokvilna') : T('mat.wool', 'Merīnvilna')) +
+      row(T('spec.season', 'Sezona'), seasonTxt) +
+      row(T('spec.color', 'Krāsa'), MiniMe.COLORS[p.color]) +
+      row(T('spec.sizes', 'Pieejamie izmēri'), p.sizes.map(function (s) { return MiniMe.SIZES[s] || s; }).join(', ')) +
     '</dl>';
   }
   function row(k, v) { return '<div><dt>' + k + '</dt><dd>' + v + '</dd></div>'; }
 
   host.innerHTML =
-    '<p class="crumbs"><a href="index.html">Sākums</a> / <a href="store.html">Veikals</a> / ' +
+    '<p class="crumbs"><a href="index.html">' + T('store.crumb', 'Sākums') + '</a> / <a href="store.html">' + T('store.h1', 'Veikals') + '</a> / ' +
       '<a href="store.html">' + MiniMe.CATS[p.cat] + '</a> / <b>' + MiniMe.escapeAttr(p.name) + '</b></p>' +
     '<div class="pdp">' +
       media() +
@@ -76,20 +79,23 @@
         '<h1>' + MiniMe.escapeAttr(p.name) + '</h1>' +
         priceBlock() +
         '<p class="pdp-desc">' + MiniMe.description(p) + '</p>' +
-        '<p class="buy-label">Izvēlies izmēru <span class="req" id="reqNote"></span></p>' +
+        '<p class="buy-label">' + T('pdp.size', 'Izvēlies izmēru') + ' <span class="req" id="reqNote"></span></p>' +
         '<div class="sizes" id="sizes">' + sizeButtons() + '</div>' +
         '<div class="buy-row">' +
-          '<div class="stepper"><button id="qminus" aria-label="Mazāk">−</button>' +
+          '<div class="stepper"><button id="qminus" aria-label="−">−</button>' +
             '<span id="qval">1</span>' +
-            '<button id="qplus" aria-label="Vairāk">+</button></div>' +
-          '<button class="btn add-cart" id="addCart">Pievienot grozam</button>' +
+            '<button id="qplus" aria-label="+">+</button></div>' +
+          '<button class="btn add-cart" id="addCart">' + T('pdp.add', 'Pievienot grozam') + '</button>' +
         '</div>' +
         '<p class="buy-error" id="buyError" role="alert"></p>' +
         specs() +
-        '<div class="ship-note"><span>📦</span><span><b>Piegāde 2–4 darba dienās</b> ar Omniva, DPD vai Latvijas Pastu. ' +
-          'Bezmaksas piegāde pasūtījumiem virs 40&nbsp;€. Katra cepure tiek adīta pēc pasūtījuma.</span></div>' +
+        '<div class="ship-note"><span>📦</span><span>' +
+          T('pdp.ship', '<b>Piegāde 2–4 darba dienās</b> ar Omniva, DPD vai Latvijas Pastu. Bezmaksas piegāde pasūtījumiem virs 40&nbsp;€. Katra cepure tiek adīta pēc pasūtījuma.') +
+        '</span></div>' +
       '</div>' +
     '</div>';
+
+  MiniMeWish.bind(host);
 
   /* size selection */
   document.getElementById('sizes').addEventListener('click', function (e) {
@@ -114,8 +120,8 @@
   /* add to cart */
   document.getElementById('addCart').addEventListener('click', function () {
     if (!state.size) {
-      document.getElementById('buyError').textContent = 'Lūdzu izvēlies izmēru.';
-      document.getElementById('reqNote').textContent = '· obligāti';
+      document.getElementById('buyError').textContent = T('pdp.err', 'Lūdzu izvēlies izmēru.');
+      document.getElementById('reqNote').textContent = T('pdp.req', '· obligāti');
       return;
     }
     MiniMeCart.add(p.id, state.size, state.qty);
@@ -138,4 +144,26 @@
         '<div class="rbody"><h3>' + MiniMe.escapeAttr(r.name) + '</h3>' + price + '</div></a>';
     }).join('');
   }
+
+  /* JSON-LD structured data (SEO) */
+  var ld = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: p.name,
+    description: MiniMe.description(p),
+    category: MiniMe.CATS[p.cat],
+    material: MiniMe.material(p) === 'kokvilna' ? 'Cotton' : 'Merino wool',
+    brand: { '@type': 'Brand', name: 'Mini Me' },
+    offers: {
+      '@type': 'Offer',
+      price: String(p.price),
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      url: location.href
+    }
+  };
+  var script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify(ld);
+  document.head.appendChild(script);
 })();

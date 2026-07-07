@@ -10,35 +10,39 @@
 </head>
 <body>
 
-<div class="ribbon">Bezmaksas piegāde Omniva pakomātā pasūtījumiem virs 40&nbsp;€ · Adīts ar rokām Rīgā</div>
+<div class="ribbon" data-ribbon>Bezmaksas piegāde Omniva pakomātā pasūtījumiem virs 40&nbsp;€ · Adīts ar rokām Rīgā</div>
 
 <header class="site">
   <div class="wrap bar">
-    <a class="logo" href="index.html">mini&nbsp;me <span class="pom"></span> <small>cepures · Rīga</small></a>
-    <nav class="main" aria-label="Galvenā navigācija">
-      <a href="index.html" aria-current="page">Sākums</a>
-      <a href="store.html">Veikals</a>
-      <a href="#par-mums">Par mums</a>
-      <a href="#kontakti">Kontakti</a>
+    <a class="logo" href="index.html">mini&nbsp;me <span class="pom"></span> <small data-i18n="logo.sub">cepures · Rīga</small></a>
+    <nav class="main" aria-label="Navigācija">
+      <a href="index.html" aria-current="page" data-i18n="nav.home">Sākums</a>
+      <a href="store.html" data-i18n="nav.shop">Veikals</a>
+      <a href="#par-mums" data-i18n="nav.about">Par mums</a>
+      <a href="#kontakti" data-i18n="nav.contact">Kontakti</a>
     </nav>
-    <button class="cart" data-cart-open style="margin-left:auto" aria-label="Atvērt grozu">Grozs <span class="count" data-cart-count>0</span></button>
+    <div class="hdr-actions">
+      <button class="lang-btn" data-lang-switch>EN</button>
+      <a class="wish-btn" href="wishlist.html" data-i18n-title="wl.h1" title="Vēlmju saraksts" aria-label="Vēlmju saraksts">♡ <span class="count" data-wish-count>0</span></a>
+      <button class="cart" data-cart-open aria-label="Grozs"><span data-i18n="cart.btn">Grozs</span> <span class="count" data-cart-count>0</span></button>
+    </div>
   </div>
 </header>
 
 <section class="hero">
   <div class="wrap">
     <div>
-      <p class="eyebrow">Ar rokām adīts Rīgā</p>
-      <h1>Vienādas cepures tev un tavam <em>mini&nbsp;me</em></h1>
-      <p class="lead">Mīkstas, rokām adītas cepures bērniem no 0 līdz 12 gadiem — un tieši tādas pašas arī mammai un tētim. Katra cepure top Rīgā no dabīgas dzijas.</p>
+      <p class="eyebrow" data-i18n="hero.eyebrow">Ar rokām adīts Rīgā</p>
+      <h1 data-i18n="hero.title">Vienādas cepures tev un tavam <em>mini&nbsp;me</em></h1>
+      <p class="lead" data-i18n="hero.lead">Mīkstas, rokām adītas cepures bērniem no 0 līdz 12 gadiem — un tieši tādas pašas arī mammai un tētim. Katra cepure top Rīgā no dabīgas dzijas.</p>
       <div class="cta-row">
-        <a class="btn" href="store.html">Skatīt kolekciju</a>
-        <a class="btn ghost" href="store.html#komplekti">Mini Me komplekti</a>
+        <a class="btn" href="store.html" data-i18n="hero.cta1">Skatīt kolekciju</a>
+        <a class="btn ghost" href="store.html#komplekti" data-i18n="hero.cta2">Mini Me komplekti</a>
       </div>
       <ul class="trust">
-        <li>Adīts ar rokām</li>
-        <li>Merīnvilna un kokvilna</li>
-        <li>Izmēri 0–12 gadi + pieaugušajiem</li>
+        <li data-i18n="trust.1">Adīts ar rokām</li>
+        <li data-i18n="trust.2">Merīnvilna un kokvilna</li>
+        <li data-i18n="trust.3">Izmēri 0–12 gadi + pieaugušajiem</li>
       </ul>
     </div>
     <figure class="hero-art">
@@ -46,7 +50,7 @@
         <svg width="190" height="187" role="img" aria-label="Liela adīta cepure"><use href="#beanie"/></svg>
         <svg width="120" height="118" role="img" aria-label="Maza adīta cepure"><use href="#beanie"/></svg>
       </div>
-      <figcaption>Komplekts “Pūka” — mammai un meitai</figcaption>
+      <figcaption data-i18n="hero.caption">Komplekts “Pūka” — mammai un meitai</figcaption>
     </figure>
   </div>
 </section>
@@ -55,15 +59,15 @@
   <div class="wrap cats">
     <a class="cat" href="store.html">
       <span class="thumb" style="--yarn: var(--yarn-zila)"><svg width="36" height="35"><use href="#beanie"/></svg></span>
-      <span><h3>Bērnu cepures</h3><p>0–12 gadi, ar pušķi vai bez</p></span>
+      <span><h3 data-i18n="cat1.t">Bērnu cepures</h3><p data-i18n="cat1.d">0–12 gadi, ar pušķi vai bez</p></span>
     </a>
     <a class="cat" href="store.html#komplekti">
       <span class="thumb" style="--yarn: var(--yarn-salvija)"><svg width="36" height="35"><use href="#beanie"/></svg></span>
-      <span><h3>Mini Me komplekti</h3><p>Viens dizains — divi izmēri</p></span>
+      <span><h3 data-i18n="cat2.t">Mini Me komplekti</h3><p data-i18n="cat2.d">Viens dizains — divi izmēri</p></span>
     </a>
     <a class="cat" href="store.html">
       <span class="thumb" style="--yarn: var(--yarn-medus)"><svg width="36" height="35"><use href="#beanie"/></svg></span>
-      <span><h3>Pieaugušo cepures</h3><p>Tāpat kā mazajiem, tikai lielākas</p></span>
+      <span><h3 data-i18n="cat3.t">Pieaugušo cepures</h3><p data-i18n="cat3.d">Tāpat kā mazajiem, tikai lielākas</p></span>
     </a>
   </div>
 </section>
@@ -71,8 +75,8 @@
 <section class="block" id="populari">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Populārākās cepures</h2>
-      <a class="all" href="store.html">Visas cepures →</a>
+      <h2 data-i18n="sec.popular">Populārākās cepures</h2>
+      <a class="all" href="store.html" data-i18n="sec.all">Visas cepures →</a>
     </div>
     <div class="featured" id="featured"><!-- rendered by landing.js --></div>
   </div>
@@ -82,10 +86,10 @@
   <div class="wrap">
     <div class="duo">
       <div>
-        <p class="eyebrow">Mūsu īpašais piedāvājums</p>
-        <h2>Mini Me komplekti — viens dizains, divi izmēri</h2>
-        <p>Izvēlies krāsu un dziju, un mēs uzadīsim divas vienādas cepures: vienu tev, otru tavam mazajam. Ideāla dāvana jaunajiem vecākiem un ģimenes fotosesijām.</p>
-        <a class="btn" href="store.html#komplekti">Salikt savu komplektu</a>
+        <p class="eyebrow" data-i18n="duo.eyebrow">Mūsu īpašais piedāvājums</p>
+        <h2 data-i18n="duo.title">Mini Me komplekti — viens dizains, divi izmēri</h2>
+        <p data-i18n="duo.text">Izvēlies krāsu un dziju, un mēs uzadīsim divas vienādas cepures: vienu tev, otru tavam mazajam. Ideāla dāvana jaunajiem vecākiem un ģimenes fotosesijām.</p>
+        <a class="btn" href="store.html#komplekti" data-i18n="duo.cta">Salikt savu komplektu</a>
       </div>
       <div class="pair" style="--yarn: #FFF6F1; --stitch: rgba(0,0,0,.22); --brim-shade: rgba(0,0,0,.12)">
         <svg width="150" height="148" aria-hidden="true"><use href="#beanie"/></svg>
@@ -97,19 +101,19 @@
 
 <section class="block" id="par-mums">
   <div class="wrap">
-    <div class="sec-head"><h2>Kāpēc Mini Me?</h2></div>
+    <div class="sec-head"><h2 data-i18n="vals.h">Kāpēc Mini Me?</h2></div>
     <div class="vals">
       <div class="val" style="--vy: var(--yarn-roza)">
-        <h3>Adīts ar rokām Rīgā</h3>
-        <p>Katra cepure top mūsu darbnīcā Rīgā — bez ražošanas līnijām, ar rūpību par katru valdziņu.</p>
+        <h3 data-i18n="val1.t">Adīts ar rokām Rīgā</h3>
+        <p data-i18n="val1.d">Katra cepure top mūsu darbnīcā Rīgā — bez ražošanas līnijām, ar rūpību par katru valdziņu.</p>
       </div>
       <div class="val" style="--vy: var(--yarn-salvija)">
-        <h3>Dabīga, maiga dzija</h3>
-        <p>Merīnvilna un kokvilna, kas nekasās un ir droša pat vismazākajai ādiņai.</p>
+        <h3 data-i18n="val2.t">Dabīga, maiga dzija</h3>
+        <p data-i18n="val2.d">Merīnvilna un kokvilna, kas nekasās un ir droša pat vismazākajai ādiņai.</p>
       </div>
       <div class="val" style="--vy: var(--yarn-medus)">
-        <h3>Pēc taviem izmēriem</h3>
-        <p>Norādi galvas apkārtmēru un vēlamo krāsu — pielāgosim jebkuru modeli tieši tev.</p>
+        <h3 data-i18n="val3.t">Pēc taviem izmēriem</h3>
+        <p data-i18n="val3.d">Norādi galvas apkārtmēru un vēlamo krāsu — pielāgosim jebkuru modeli tieši tev.</p>
       </div>
     </div>
   </div>
@@ -117,18 +121,34 @@
 
 <section class="block" aria-label="Atsauksmes">
   <div class="wrap">
-    <div class="sec-head"><h2>Ko saka vecāki</h2><a class="all" href="https://www.facebook.com/Minimicepures/">Atsauksmes Facebook →</a></div>
+    <div class="sec-head"><h2 data-i18n="quotes.h">Ko saka vecāki</h2><a class="all" href="https://www.facebook.com/Minimicepures/" data-i18n="quotes.fb">Atsauksmes Facebook →</a></div>
     <div class="quotes">
       <div class="quote">
         <div class="stars" aria-label="5 zvaigznes">★★★★★</div>
-        <p>“Pasūtījām Mini Me komplektu ģimenes fotosesijai — kvalitāte lieliska, un meitiņa cepuri negrib ņemt nost pat mājās.”</p>
-        <cite>— Laura, Rīga</cite>
+        <p data-i18n="quote1.text">“Pasūtījām Mini Me komplektu ģimenes fotosesijai — kvalitāte lieliska, un meitiņa cepuri negrib ņemt nost pat mājās.”</p>
+        <cite data-i18n="quote1.name">— Laura, Rīga</cite>
       </div>
       <div class="quote">
         <div class="stars" aria-label="5 zvaigznes">★★★★★</div>
-        <p>“Ātra piegāde, mīksta dzija un ļoti atsaucīga saziņa. Labākā dāvana, ko esam dāvinājuši draugiem ar mazuli.”</p>
-        <cite>— Kristaps, Jelgava</cite>
+        <p data-i18n="quote2.text">“Ātra piegāde, mīksta dzija un ļoti atsaucīga saziņa. Labākā dāvana, ko esam dāvinājuši draugiem ar mazuli.”</p>
+        <cite data-i18n="quote2.name">— Kristaps, Jelgava</cite>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" aria-label="Jaunumu vēstkopa">
+  <div class="wrap">
+    <div class="newsletter">
+      <div>
+        <h2 data-i18n="nl.h">Saņem −10% pirmajam pasūtījumam</h2>
+        <p data-i18n="nl.p">Piesakies jaunumiem un uzreiz saņem sveiciena kodu.</p>
+      </div>
+      <form class="nl-form" id="nlForm">
+        <input type="email" id="nlEmail" placeholder="Tavs e-pasts" data-i18n-ph="nl.ph" aria-label="E-pasts">
+        <button class="btn" type="submit" data-i18n="nl.btn">Pieteikties</button>
+      </form>
+      <p class="nl-msg" id="nlMsg" role="status"></p>
     </div>
   </div>
 </section>
@@ -137,35 +157,37 @@
   <div class="wrap">
     <div class="fgrid">
       <div>
-        <a class="logo" href="index.html" style="font-size:1.25rem">mini&nbsp;me <span class="pom"></span> <small>cepures · Rīga</small></a>
-        <p class="about">Rokām adītas cepures bērniem un vecākiem. Adīts ar mīlestību Rīgā, piegādājam visā Latvijā un Eiropā.</p>
+        <a class="logo" href="index.html" style="font-size:1.25rem">mini&nbsp;me <span class="pom"></span> <small data-i18n="logo.sub">cepures · Rīga</small></a>
+        <p class="about" data-i18n="footer.about">Rokām adītas cepures bērniem un vecākiem. Adīts ar mīlestību Rīgā, piegādājam visā Latvijā un Eiropā.</p>
       </div>
       <div>
-        <h4>Seko mums</h4>
+        <h4 data-i18n="footer.follow">Seko mums</h4>
         <ul>
           <li><a href="https://www.facebook.com/Minimicepures/">Facebook — Mini me</a></li>
           <li><a href="https://www.tiktok.com/@minimeshop.lv">TikTok — @minimeshop.lv</a></li>
         </ul>
       </div>
       <div>
-        <h4>Noderīgi</h4>
+        <h4 data-i18n="footer.useful">Noderīgi</h4>
         <ul>
-          <li><a href="store.html">Veikals</a></li>
+          <li><a href="store.html" data-i18n="footer.shop">Veikals</a></li>
           <li><a href="#kontakti">info@minimeshop.lv</a></li>
-          <li><a href="#kontakti">Piegāde: Omniva, DPD, Latvijas Pasts</a></li>
+          <li><a href="#kontakti" data-i18n="footer.delivery">Piegāde: Omniva, DPD, Latvijas Pasts</a></li>
         </ul>
       </div>
     </div>
     <div class="copyright">
       <span>© <span data-year>2026</span> Mini Me · minimeshop.lv · Rīga, Latvija</span>
-      <span><a href="admin.html">Administrācija</a></span>
+      <span><a href="admin.html" data-i18n="footer.admin">Administrācija</a></span>
     </div>
   </div>
 </footer>
 
 <script src="js/icons.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
 <script src="js/site.js"></script>
 <script src="js/landing.js"></script>
 </body>

@@ -164,6 +164,62 @@ footer p.about { font-size: .88rem; color: var(--ink-soft); max-width: 38ch; mar
 
 @media (max-width: 720px) { .fgrid { grid-template-columns: 1fr; } }
 
+/* ---------- header action cluster (lang / wishlist / cart) ---------- */
+.hdr-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.lang-btn {
+  border: 1px solid var(--line); background: var(--card); color: var(--ink-soft);
+  border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  font-family: var(--display); font-weight: 700; font-size: .78rem; letter-spacing: .06em;
+}
+.lang-btn:hover { border-color: var(--accent); color: var(--ink); }
+.wish-btn {
+  display: flex; align-items: center; gap: 7px; background: var(--card);
+  border: 1px solid var(--line); border-radius: 999px; padding: 7px 13px;
+  font-weight: 700; font-family: var(--display); font-size: .95rem; cursor: pointer;
+  text-decoration: none; color: var(--ink); line-height: 1;
+}
+.wish-btn:hover { border-color: var(--accent); }
+.wish-btn .count { background: var(--accent-soft); color: var(--ink); border-radius: 999px; min-width: 21px; height: 21px; display: grid; place-items: center; font-size: .75rem; }
+.wish-btn .count[data-some] { background: var(--accent); color: var(--accent-ink); }
+
+/* ---------- product-card heart ---------- */
+.wish-heart {
+  position: absolute; top: 10px; right: 10px; z-index: 3;
+  width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--card) 88%, transparent); color: var(--ink-soft);
+  cursor: pointer; font-size: 1.05rem; line-height: 1; display: grid; place-items: center;
+  transition: transform .12s ease, color .12s ease;
+}
+.wish-heart:hover { transform: scale(1.1); color: var(--accent); }
+.wish-heart.saved { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- free-shipping progress ---------- */
+.ship-progress { padding: 14px 0 6px; border-bottom: 1px solid var(--line); }
+.ship-progress p { margin: 0 0 8px; font-size: .82rem; font-weight: 600; color: var(--ink-soft); }
+.ship-progress.done p { color: color-mix(in srgb, var(--yarn-salvija) 60%, var(--ink)); }
+.ship-progress .bar { height: 8px; border-radius: 999px; background: var(--accent-soft); overflow: hidden; }
+.ship-progress .bar span { display: block; height: 100%; border-radius: 999px; background: var(--accent); transition: width .3s ease; }
+.ship-progress.done .bar span { background: var(--yarn-salvija); }
+
+/* ---------- newsletter ---------- */
+.newsletter {
+  background: var(--accent); color: var(--accent-ink);
+  border-radius: var(--radius); padding: 30px 32px;
+  display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center;
+  position: relative; overflow: hidden;
+}
+.newsletter::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 12px; background: repeating-linear-gradient(90deg, rgba(255,255,255,.25) 0 8px, transparent 8px 16px); }
+@media (max-width: 720px) { .newsletter { grid-template-columns: 1fr; } }
+.newsletter h2 { font-size: 1.4rem; }
+.newsletter p { margin: 6px 0 0; font-size: .9rem; opacity: .92; }
+.nl-form { display: flex; gap: 10px; }
+.nl-form input {
+  flex: 1; border: none; border-radius: 999px; padding: 12px 18px;
+  font-size: .95rem; font-family: var(--body); background: var(--accent-ink); color: #3A2C23;
+}
+.nl-form .btn { background: #3A2C23; color: #FFF6F1; white-space: nowrap; }
+.nl-msg { grid-column: 1 / -1; margin: 4px 0 0; font-size: .9rem; font-weight: 600; min-height: 20px; }
+
 /* ---------- cart drawer (shared) ---------- */
 .cart-backdrop { position: fixed; inset: 0; background: rgba(20,14,10,.5); opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 190; }
 .cart-backdrop.show { opacity: 1; pointer-events: auto; }

@@ -1,7 +1,7 @@
 /* ==========================================================================
    Mini Me — store.js
-   Catalogue page: filtering, sorting, search, chips, mobile filter drawer.
-   Reads the catalogue through MiniMe.getProducts() so admin edits show here.
+   Catalogue page: filtering, sorting, search, chips, mobile filter drawer,
+   quick-add (size picker) and wishlist hearts. Localised via I18N/T().
    ========================================================================== */
 (function () {
   var CATS = MiniMe.CATS, SEASONS = MiniMe.SEASONS, COLORS = MiniMe.COLORS;
@@ -19,6 +19,15 @@
   var emptyEl = document.getElementById('empty');
   var shopEl = document.getElementById('veikals');
 
+  /* sync filter option labels with the (possibly localised) taxonomy */
+  document.querySelectorAll('[data-cat-label]').forEach(function (el) { el.textContent = CATS[el.getAttribute('data-cat-label')]; });
+  document.querySelectorAll('[data-season-label]').forEach(function (el) { el.textContent = SEASONS[el.getAttribute('data-season-label')]; });
+  document.querySelectorAll('[data-size-label]').forEach(function (el) { el.textContent = MiniMe.SIZES[el.getAttribute('data-size-label')]; });
+  document.querySelectorAll('.swatch').forEach(function (sw) {
+    var c = COLORS[sw.getAttribute('data-color')];
+    sw.title = c; sw.setAttribute('aria-label', c);
+  });
+
   /* category counts in the filter list */
   document.querySelectorAll('[data-n]').forEach(function (el) {
     var c = el.getAttribute('data-n');
@@ -26,10 +35,10 @@
   });
 
   function badgeFor(p) {
-    if (p.oldPrice) return '<span class="badge sale">Akcija</span>';
-    if (p.isNew) return '<span class="badge">Jaunums</span>';
-    if (p.type === 'set') return '<span class="badge alt">Komplekts</span>';
-    if (p.pop >= 90) return '<span class="badge">Populārs</span>';
+    if (p.oldPrice) return '<span class="badge sale">' + T('badge.sale', 'Akcija') + '</span>';
+    if (p.isNew) return '<span class="badge">' + T('badge.new', 'Jaunums') + '</span>';
+    if (p.type === 'set') return '<span class="badge alt">' + T('badge.set', 'Komplekts') + '</span>';
+    if (p.pop >= 90) return '<span class="badge">' + T('badge.pop', 'Populārs') + '</span>';
     return '';
   }
 
@@ -61,11 +70,11 @@
     var out = [];
     state.cat.forEach(function (v) { out.push({ k: 'cat', v: v, label: CATS[v] }); });
     state.season.forEach(function (v) { out.push({ k: 'season', v: v, label: SEASONS[v] }); });
-    state.size.forEach(function (v) { out.push({ k: 'size', v: v, label: 'Izmērs: ' + v }); });
+    state.size.forEach(function (v) { out.push({ k: 'size', v: v, label: T('chip.size', 'Izmērs: ') + (MiniMe.SIZES[v] || v) }); });
     state.color.forEach(function (v) { out.push({ k: 'color', v: v, label: COLORS[v] }); });
-    if (state.maxPrice < PRICE_MAX) out.push({ k: 'maxPrice', v: '', label: 'Līdz ' + state.maxPrice + ' €' });
-    if (state.sale) out.push({ k: 'sale', v: '', label: 'Akcijā' });
-    if (state.isNew) out.push({ k: 'new', v: '', label: 'Jaunumi' });
+    if (state.maxPrice < PRICE_MAX) out.push({ k: 'maxPrice', v: '', label: T('f.upto', 'Līdz') + ' ' + state.maxPrice + ' €' });
+    if (state.sale) out.push({ k: 'sale', v: '', label: T('f.sale', 'Akcijā') });
+    if (state.isNew) out.push({ k: 'new', v: '', label: T('f.new', 'Jaunumi') });
     if (state.q) out.push({ k: 'q', v: '', label: '“' + state.q + '”' });
     chipsEl.innerHTML = out.map(function (c, i) {
       return '<button class="chip" data-i="' + i + '">' + c.label + '</button>';
@@ -73,6 +82,14 @@
     chipsEl._data = out;
     var n = out.length;
     document.getElementById('fbadge').textContent = n ? '(' + n + ')' : '';
+  }
+
+  function countLine(n) {
+    if (I18N.lang === 'en') {
+      return 'Found <b>' + n + '</b> ' + (n === 1 ? 'product' : 'products') + ' of ' + P.length;
+    }
+    var one = n % 10 === 1 && n % 100 !== 11;
+    return (one ? 'Atrasts' : 'Atrasti') + ' <b>' + n + '</b> ' + (one ? 'produkts' : 'produkti') + ' no ' + P.length;
   }
 
   function render() {
@@ -83,25 +100,26 @@
         : '<span class="price">' + p.price + '&nbsp;€</span>';
       var href = 'product.html?id=' + p.id;
       return '<article class="product" style="--yarn: var(--yarn-' + p.color + ')">' +
+        '<button class="wish-heart" data-wish="' + p.id + '" aria-label="♡">♡</button>' +
         '<a class="plink" href="' + href + '">' +
           '<div class="ph">' + badgeFor(p) + MiniMe.productArtHTML(p) + '</div>' +
           '<div class="pinfo"><h3>' + MiniMe.escapeAttr(p.name) + '</h3>' +
-          '<p class="meta">' + CATS[p.cat] + ' · ' + p.sizes.join(', ') + '</p></div>' +
+          '<p class="meta">' + CATS[p.cat] + ' · ' + p.sizes.map(function (s) { return MiniMe.SIZES[s] || s; }).join(', ') + '</p></div>' +
         '</a>' +
-        '<div class="buy">' + price + '<a class="add" href="' + href + '">Izvēlēties →</a></div>' +
+        '<div class="buy">' + price +
+          '<button class="qa-btn" data-qa="' + p.id + '">' + T('quick.add', 'Ātri grozā') + '</button>' +
+        '</div>' +
         '</article>';
     }).join('');
-    var n = items.length;
-    var one = n % 10 === 1 && n % 100 !== 11;
-    countEl.innerHTML = (one ? 'Atrasts' : 'Atrasti') + ' <b>' + n + '</b> ' + (one ? 'produkts' : 'produkti') + ' no ' + P.length;
+    countEl.innerHTML = countLine(items.length);
     emptyEl.hidden = items.length > 0;
     chips();
+    MiniMeWish.bind(grid);
   }
 
   /* When a filter shrinks the catalogue the page gets shorter and the browser
      clamps the scroll — which can dump the user at the very bottom. If the
-     results have scrolled up out of view, bring them back under the header.
-     No-ops when the shop is already visible (e.g. filtering from the top). */
+     results have scrolled up out of view, bring them back under the header. */
   function keepResultsInView() {
     var top = shopEl.getBoundingClientRect().top;
     if (top < 70) {
@@ -109,7 +127,38 @@
     }
   }
 
-  /* ---------- events ---------- */
+  /* ---------- quick add (size picker) ---------- */
+  var qaModal = document.getElementById('qaModal');
+  var qaSizes = document.getElementById('qaSizes');
+  var qaName = document.getElementById('qaName');
+
+  function openQuickAdd(id) {
+    var p = MiniMe.findById(id);
+    if (!p) return;
+    qaName.textContent = p.name + ' · ' + p.price + ' €';
+    qaSizes.innerHTML = p.sizes.map(function (s) {
+      return '<button class="size-btn" data-add-size="' + s + '" data-add-id="' + p.id + '">' + (MiniMe.SIZES[s] || s) + '</button>';
+    }).join('');
+    qaModal.hidden = false;
+  }
+  function closeQuickAdd() { qaModal.hidden = true; }
+
+  grid.addEventListener('click', function (e) {
+    var qa = e.target.closest('[data-qa]');
+    if (qa) { e.preventDefault(); openQuickAdd(qa.getAttribute('data-qa')); }
+  });
+  qaSizes.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-add-size]');
+    if (!b) return;
+    MiniMeCart.add(b.getAttribute('data-add-id'), b.getAttribute('data-add-size'), 1);
+    closeQuickAdd();
+    MiniMeCart.open();
+  });
+  document.getElementById('qaClose').addEventListener('click', closeQuickAdd);
+  qaModal.addEventListener('mousedown', function (e) { if (e.target === qaModal) closeQuickAdd(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !qaModal.hidden) closeQuickAdd(); });
+
+  /* ---------- filter events ---------- */
   document.querySelectorAll('fieldset[data-filter="cat"] input, fieldset[data-filter="season"] input, fieldset[data-filter="size"] input').forEach(function (input) {
     input.addEventListener('change', function () {
       var key = input.closest('fieldset').getAttribute('data-filter');
