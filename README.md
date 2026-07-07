@@ -5,11 +5,17 @@ Statisks sākums (HTML/CSS/JS, bez build soļa), kas hostējams uz Vercel.
 
 ## Lapas
 
-| URL          | Fails         | Saturs                                            |
-|--------------|---------------|---------------------------------------------------|
-| `/`          | `index.html`  | Sākumlapa — hero, kategorijas, populārākie, komplekti, atsauksmes |
-| `/store`     | `store.html`  | Veikals — filtri, sezonas, meklēšana, kārtošana   |
-| `/admin`     | `admin.html`  | Administrācija — produktu pārvaldība (prototips)   |
+| URL          | Fails           | Saturs                                            |
+|--------------|-----------------|---------------------------------------------------|
+| `/`          | `index.html`    | Sākumlapa — hero, kategorijas, populārākie, komplekti, atsauksmes, vēstkopa |
+| `/store`     | `store.html`    | Veikals — filtri, sezonas, meklēšana, kārtošana, ātrā pievienošana |
+| `/product`   | `product.html`  | Produkta lapa — izmērs, daudzums, grozs, JSON-LD  |
+| `/checkout`  | `checkout.html` | Apmaksa — piegāde, atlaides kodi, apstiprinājums  |
+| `/wishlist`  | `wishlist.html` | Vēlmju saraksts (♡)                                |
+| `/admin`     | `admin.html`    | Administrācija — produktu pārvaldība (prototips)   |
+
+**Valodas:** LV (pamata) / EN — pārslēdzējs galvenē (`js/i18n.js`).
+**Atlaides kodi:** `WELCOME10` (−10%), `MINIME5` (−5 €) — definēti `js/checkout.js`.
 
 (`/store` un `/admin` strādā, pateicoties `cleanUrls` iestatījumam `vercel.json`.)
 
