@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Mini Me — landing.css
+   Home page: hero, categories, featured strip, Mini Me banner, values,
+   reviews.
+   ========================================================================== */
+
+/* ---------- hero ---------- */
+.hero { padding: 56px 0 40px; }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
+@media (max-width: 820px) { .hero .wrap { grid-template-columns: 1fr; } }
+.eyebrow { font-size: .74rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+.hero h1 { font-size: clamp(2.1rem, 5vw, 3.3rem); font-weight: 700; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p.lead { max-width: 46ch; color: var(--ink-soft); margin: 18px 0 26px; }
+.cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+.trust { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 30px; padding: 0; list-style: none; }
+.trust li { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--ink-soft); font-weight: 600; }
+.trust li::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; }
+
+.hero-art { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 20px 14px; position: relative; overflow: hidden; margin: 0; }
+.hero-art::after { content: ""; position: absolute; inset: auto 0 0 0; height: 26px; background: repeating-linear-gradient(90deg, var(--accent-soft) 0 8px, transparent 8px 16px); opacity: .9; }
+.hero-art .pair { display: flex; align-items: flex-end; justify-content: center; gap: 4px; }
+.hero-art figcaption { text-align: center; font-size: .8rem; color: var(--ink-soft); margin: 14px 0 20px; font-weight: 600; }
+
+/* ---------- sections ---------- */
+section.block { padding: 46px 0; }
+.sec-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 26px; flex-wrap: wrap; }
+.sec-head h2 { font-size: 1.7rem; font-weight: 700; }
+.sec-head a.all { margin-left: auto; font-size: .9rem; font-weight: 700; color: var(--accent); text-decoration: none; font-family: var(--display); }
+.sec-head a.all:hover { text-decoration: underline; }
+
+/* categories */
+.cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 720px) { .cats { grid-template-columns: 1fr; } }
+.cat { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; display: flex; align-items: center; gap: 16px; text-decoration: none; transition: transform .15s ease, border-color .15s ease; }
+.cat:hover { transform: translateY(-3px); border-color: var(--accent); }
+.cat .thumb { width: 58px; height: 58px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); }
+.cat h3 { font-size: 1.06rem; }
+.cat p { margin: 2px 0 0; font-size: .82rem; color: var(--ink-soft); }
+
+/* featured strip */
+.featured { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+.fcard { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
+.fcard:hover { transform: translateY(-4px); box-shadow: 0 12px 26px var(--shadow); }
+.fcard .ph { position: relative; padding: 22px 0 8px; display: grid; place-items: center; min-height: 150px; background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--yarn) 28%, var(--card)) 0 46%, transparent 47%), var(--card); }
+.fcard .ph .setwrap { display: flex; align-items: flex-end; gap: 2px; }
+.fcard .ph .pimg { width: 100%; height: 100%; min-height: 168px; object-fit: cover; position: absolute; inset: 0; }
+.fcard .fbody { padding: 4px 16px 16px; display: flex; flex-direction: column; gap: 4px; }
+.fcard h3 { font-size: .98rem; font-weight: 600; }
+.fcard .fmeta { font-size: .76rem; color: var(--ink-soft); }
+.fcard .price { font-weight: 700; font-size: 1.1rem; margin-top: 4px; }
+.fcard .price s { color: var(--ink-soft); font-weight: 600; font-size: .8rem; margin-right: 5px; }
+
+/* Mini Me banner */
+.duo { background: var(--accent); color: var(--accent-ink); border-radius: var(--radius); padding: 40px 36px; display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: center; position: relative; overflow: hidden; }
+.duo::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 14px; background: repeating-linear-gradient(90deg, rgba(255,255,255,.28) 0 8px, transparent 8px 16px); }
+@media (max-width: 720px) { .duo { grid-template-columns: 1fr; } }
+.duo .eyebrow { color: var(--accent-ink); opacity: .8; }
+.duo h2 { font-size: clamp(1.5rem, 3.4vw, 2.2rem); font-weight: 700; }
+.duo p { max-width: 52ch; opacity: .92; margin: 12px 0 20px; }
+.duo .btn { background: var(--accent-ink); color: var(--accent); }
+.duo .pair { display: flex; align-items: flex-end; gap: 2px; justify-content: center; }
+
+/* values */
+.vals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 720px) { .vals { grid-template-columns: 1fr; } }
+.val { border: 2px dashed var(--line); border-radius: var(--radius); padding: 22px 22px 20px; }
+.val h3 { font-size: 1.02rem; margin-bottom: 6px; }
+.val h3::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--vy, var(--accent)); margin-right: 9px; }
+.val p { margin: 0; font-size: .88rem; color: var(--ink-soft); }
+
+/* reviews */
+.quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 720px) { .quotes { grid-template-columns: 1fr; } }
+.quote { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+.stars { color: var(--yarn-medus); letter-spacing: 2px; font-size: .95rem; }
+.quote p { margin: 10px 0 12px; font-size: .95rem; }
+.quote cite { font-style: normal; font-size: .8rem; color: var(--ink-soft); font-weight: 600; }

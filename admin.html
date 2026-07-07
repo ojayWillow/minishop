@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administrācija — Mini Me</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap admin-top">
+    <a class="logo" href="index.html">mini&nbsp;me <span class="pom"></span> <small>administrācija</small></a>
+    <span class="tag">Admin</span>
+    <div class="spacer"></div>
+    <a class="linkbtn" href="store.html" id="viewShop" hidden>Skatīt veikalu →</a>
+    <button class="linkbtn" id="logout" hidden>Iziet</button>
+  </div>
+</header>
+
+<!-- LOGIN -->
+<div class="wrap login-wrap" id="loginView">
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <h1>Pieslēgšanās</h1>
+    <p class="hint">Ievadi administratora datus, lai pārvaldītu produktus un medijus.</p>
+    <p class="login-error" id="loginError" role="alert"></p>
+    <div class="field">
+      <label for="user">Lietotājvārds</label>
+      <input id="user" type="text" autocomplete="username" required>
+    </div>
+    <div class="field">
+      <label for="pass">Parole</label>
+      <input id="pass" type="password" autocomplete="current-password" required>
+    </div>
+    <button class="btn" type="submit">Pieslēgties</button>
+    <p class="creds">Demo dati: <b>admin</b> / <b>admin</b></p>
+  </form>
+</div>
+
+<!-- ADMIN APP -->
+<main class="wrap admin-app" id="appView" hidden>
+  <div class="notice">
+    <b>Prototipa režīms.</b> Izmaiņas tiek saglabātas <b>tikai šajā pārlūkā</b> (localStorage) un
+    tās neredz klienti. Lai izmaiņas publicētu visiem, nospied <b>Eksportēt</b> un pievieno failu
+    repozitorijam (skat. README). Šī pieslēgšanās nav droša aizsardzība — reālam veikalam vajadzīgs
+    aizmugursistēmas risinājums.
+  </div>
+
+  <div class="admin-head">
+    <h1>Produkti</h1>
+    <span class="count" id="pcount"></span>
+    <div class="admin-actions">
+      <button class="btn sm" id="addBtn">+ Pievienot produktu</button>
+      <button class="btn sm mut" id="exportBtn">Eksportēt JSON</button>
+      <label class="btn sm mut" for="importFile" style="cursor:pointer">Importēt JSON</label>
+      <input type="file" id="importFile" accept="application/json" hidden>
+      <button class="btn sm danger" id="resetBtn">Atiestatīt</button>
+    </div>
+  </div>
+
+  <div class="rows" id="rows"></div>
+</main>
+
+<!-- EDITOR MODAL -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <form class="sheet" id="editForm">
+    <h2 id="sheetTitle">Rediģēt produktu</h2>
+
+    <div class="field">
+      <label for="f-name">Nosaukums</label>
+      <input id="f-name" type="text" required>
+    </div>
+
+    <div class="grid2">
+      <div class="field">
+        <label for="f-cat">Kategorija</label>
+        <select id="f-cat"></select>
+      </div>
+      <div class="field">
+        <label for="f-type">Tips (attēlam)</label>
+        <select id="f-type"></select>
+      </div>
+      <div class="field">
+        <label for="f-color">Krāsa</label>
+        <select id="f-color"></select>
+      </div>
+      <div class="field">
+        <label for="f-pop">Popularitāte (0–100)</label>
+        <input id="f-pop" type="number" min="0" max="100" step="1">
+      </div>
+      <div class="field">
+        <label for="f-price">Cena (€)</label>
+        <input id="f-price" type="number" min="0" step="1" required>
+      </div>
+      <div class="field">
+        <label for="f-oldprice">Vecā cena (€, akcijai — nav obligāti)</label>
+        <input id="f-oldprice" type="number" min="0" step="1">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Sezona</label>
+      <div class="checks" id="f-season"></div>
+    </div>
+
+    <div class="field">
+      <label>Izmēri</label>
+      <div class="checks" id="f-sizes"></div>
+    </div>
+
+    <div class="field">
+      <label><input type="checkbox" id="f-new" style="width:auto;margin-right:8px">Iezīmēt kā jaunumu</label>
+    </div>
+
+    <div class="field">
+      <label>Attēls / medijs</label>
+      <div class="uploader">
+        <div class="preview" id="f-preview"><span class="ph-empty">Nav attēla — tiks rādīts adījuma zīmējums</span></div>
+        <div class="up-actions">
+          <label class="file-btn">Augšupielādēt attēlu <input type="file" id="f-image" accept="image/*"></label>
+          <button type="button" class="linkbtn" id="f-removeimg" style="text-align:left" hidden>Noņemt attēlu</button>
+          <span class="hint-sm">JPG vai PNG, ieteicams kvadrāts. Glabājas šajā pārlūkā.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-actions">
+      <button type="button" class="btn mut" id="cancelBtn">Atcelt</button>
+      <button type="submit" class="btn">Saglabāt</button>
+    </div>
+  </form>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/icons.js"></script>
+<script src="js/products.js"></script>
+<script src="js/site.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

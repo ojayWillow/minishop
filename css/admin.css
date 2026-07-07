@@ -1,0 +1,97 @@
+/* ==========================================================================
+   Mini Me — admin.css
+   Prototype admin: login gate, product list, and the edit form.
+   ========================================================================== */
+
+.admin-top { display: flex; align-items: center; gap: 16px; padding: 14px 0; }
+.admin-top .logo { font-size: 1.3rem; }
+.admin-top .spacer { margin-left: auto; }
+.tag { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: 3px 10px; }
+.linkbtn { background: none; border: none; cursor: pointer; font-weight: 700; font-family: var(--display); color: var(--ink-soft); }
+.linkbtn:hover { color: var(--accent); }
+
+/* disclaimer banner */
+.notice {
+  background: color-mix(in srgb, var(--yarn-medus) 22%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--yarn-medus) 55%, var(--line));
+  border-radius: 14px; padding: 14px 18px; margin: 12px 0 22px;
+  font-size: .86rem; color: var(--ink); line-height: 1.5;
+}
+.notice b { font-family: var(--display); }
+
+/* login */
+.login-wrap { min-height: 66vh; display: grid; place-items: center; padding: 30px 0; }
+.login-card { width: 100%; max-width: 380px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 28px; }
+.login-card h1 { font-size: 1.5rem; margin-bottom: 4px; }
+.login-card p.hint { color: var(--ink-soft); font-size: .86rem; margin: 0 0 20px; }
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.field label { font-size: .8rem; font-weight: 700; color: var(--ink-soft); font-family: var(--display); }
+.field input, .field select, .field textarea {
+  border: 1px solid var(--line); background: var(--ground); color: var(--ink);
+  border-radius: 12px; padding: 10px 13px; font-size: .95rem; font-family: var(--body); width: 100%;
+}
+.field textarea { min-height: 66px; resize: vertical; }
+.login-error { color: var(--accent); font-size: .84rem; font-weight: 600; min-height: 18px; margin: 0 0 8px; }
+.login-card .btn { width: 100%; justify-content: center; }
+.login-card .creds { margin-top: 16px; font-size: .76rem; color: var(--ink-soft); text-align: center; }
+
+/* admin app */
+.admin-app { padding-bottom: 60px; }
+.admin-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 6px 0 18px; }
+.admin-head h1 { font-size: 1.6rem; }
+.admin-head .count { color: var(--ink-soft); font-size: .9rem; }
+.admin-actions { margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+.btn.sm { padding: 8px 16px; font-size: .85rem; }
+.btn.mut { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+.btn.mut:hover { border-color: var(--accent); filter: none; }
+.btn.danger { background: var(--card); color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--line)); }
+.btn.danger:hover { background: var(--accent); color: var(--accent-ink); filter: none; }
+
+/* product rows */
+.rows { display: flex; flex-direction: column; gap: 10px; }
+.row {
+  display: grid; grid-template-columns: 66px 1fr auto; gap: 16px; align-items: center;
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 10px 14px;
+}
+.row .thumb { width: 66px; height: 66px; border-radius: 12px; overflow: hidden; display: grid; place-items: center; background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--yarn) 28%, var(--card)) 0 46%, transparent 47%), var(--ground); }
+.row .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.row .rmain h3 { font-size: 1rem; font-weight: 600; }
+.row .rmain p { margin: 3px 0 0; font-size: .78rem; color: var(--ink-soft); }
+.row .rmain .rprice { font-family: var(--display); font-weight: 700; color: var(--ink); }
+.row .rmain .rprice s { color: var(--ink-soft); font-weight: 600; margin-right: 5px; }
+.row .ractions { display: flex; gap: 8px; }
+.pill { font-size: .66rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; border-radius: 999px; padding: 2px 8px; background: var(--accent-soft); color: var(--ink); }
+@media (max-width: 620px) { .row { grid-template-columns: 54px 1fr; } .row .thumb { width: 54px; height: 54px; } .row .ractions { grid-column: 1 / -1; } }
+
+/* editor modal */
+.modal { position: fixed; inset: 0; z-index: 200; background: rgba(20,14,10,.55); display: none; padding: 24px; overflow-y: auto; }
+.modal.open { display: grid; place-items: start center; }
+.sheet { width: 100%; max-width: 620px; background: var(--ground); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 26px 28px; margin: 20px 0; }
+.sheet h2 { font-size: 1.3rem; margin-bottom: 16px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 520px) { .grid2 { grid-template-columns: 1fr; } }
+.checks { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+.checks label { display: flex; align-items: center; gap: 7px; font-size: .85rem; color: var(--ink-soft); }
+.checks input { accent-color: var(--accent); width: 16px; height: 16px; }
+
+/* image upload */
+.uploader { display: flex; gap: 14px; align-items: center; }
+.uploader .preview { width: 84px; height: 84px; border-radius: 12px; flex: none; overflow: hidden; border: 1px solid var(--line); display: grid; place-items: center; background: var(--card); }
+.uploader .preview img { width: 100%; height: 100%; object-fit: cover; }
+.uploader .preview .ph-empty { font-size: .68rem; color: var(--ink-soft); text-align: center; padding: 4px; }
+.uploader .up-actions { display: flex; flex-direction: column; gap: 8px; }
+.file-btn { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 8px 16px; font-weight: 700; font-family: var(--display); font-size: .85rem; }
+.file-btn:hover { border-color: var(--accent); }
+.file-btn input { display: none; }
+.hint-sm { font-size: .74rem; color: var(--ink-soft); }
+
+.sheet-actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+.sheet-actions .btn { flex: 1; justify-content: center; min-width: 120px; }
+
+/* toast */
+.toast {
+  position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--ink); color: var(--ground); padding: 12px 22px; border-radius: 999px;
+  font-weight: 600; font-size: .9rem; opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; z-index: 300;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }

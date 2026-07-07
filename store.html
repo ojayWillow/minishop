@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veikals — Mini Me · adītas cepures un aksesuāri</title>
+<meta name="description" content="Rokām adītas cepures, šalles, cimdi un Mini Me komplekti. Filtrē pēc sezonas, izmēra un krāsas.">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+
+<div class="ribbon">Bezmaksas piegāde Omniva pakomātā pasūtījumiem virs 40&nbsp;€ · Adīts ar rokām Rīgā</div>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="logo" href="index.html">mini&nbsp;me <span class="pom"></span> <small>cepures · Rīga</small></a>
+    <nav class="main" aria-label="Galvenā navigācija">
+      <a href="index.html">Sākums</a>
+      <a href="store.html" aria-current="page">Veikals</a>
+      <a href="index.html#par-mums">Par mums</a>
+      <a href="index.html#kontakti">Kontakti</a>
+    </nav>
+    <div class="search" role="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+      <input id="q" type="search" placeholder="Meklēt: cepure, šalle, komplekts…" aria-label="Meklēt produktus">
+    </div>
+    <button class="cart" id="cartBtn" aria-label="Iepirkumu grozs">Grozs <span class="count" data-cart-count>0</span></button>
+  </div>
+</header>
+
+<div class="wrap pagehead" id="top">
+  <p class="crumbs"><a href="index.html">Sākums</a> / <b>Veikals</b></p>
+  <h1>Veikals</h1>
+  <p class="sub">Rokām adītas cepures, šalles, cimdi un Mini Me komplekti. Izvēlies sezonu vai izmanto filtrus, lai atrastu īsto.</p>
+</div>
+
+<div class="wrap seasons" role="group" aria-label="Sezonu kolekcijas">
+  <button class="season" data-season="ziema" style="--sea: var(--yarn-zila)" aria-pressed="false">
+    <span class="dot" style="--yarn: var(--yarn-zila)"><svg width="30" height="29"><use href="#beanie"/></svg></span>
+    <span><h3>Ziemas kolekcija</h3><p>Silta merīnvilna, oderētas cepures</p></span>
+  </button>
+  <button class="season" data-season="pavasaris-rudens" style="--sea: var(--yarn-mals)" aria-pressed="false">
+    <span class="dot" style="--yarn: var(--yarn-mals)"><svg width="30" height="29"><use href="#headband"/></svg></span>
+    <span><h3>Pavasaris / Rudens</h3><p>Vieglākas cepures un galvas lentes</p></span>
+  </button>
+  <button class="season" data-season="vasara" style="--sea: var(--yarn-medus)" aria-pressed="false">
+    <span class="dot" style="--yarn: var(--yarn-medus)"><svg width="30" height="29"><use href="#beanie"/></svg></span>
+    <span><h3>Vasaras kolekcija</h3><p>Plāna kokvilna, elpojoši adījumi</p></span>
+  </button>
+</div>
+
+<main class="wrap shop" id="veikals">
+  <aside class="filters" id="filters" aria-label="Filtri">
+    <div class="fhead">
+      <h2>Filtri</h2>
+      <button class="fclose" id="fclose">Aizvērt ✕</button>
+    </div>
+
+    <fieldset class="fgroup" data-filter="cat">
+      <legend>Kategorija</legend>
+      <label class="opt"><input type="checkbox" value="bernu-cepures"> Bērnu cepures <span class="n" data-n="bernu-cepures"></span></label>
+      <label class="opt"><input type="checkbox" value="pieauguso-cepures"> Pieaugušo cepures <span class="n" data-n="pieauguso-cepures"></span></label>
+      <label class="opt"><input type="checkbox" value="komplekti"> Mini Me komplekti <span class="n" data-n="komplekti"></span></label>
+      <label class="opt"><input type="checkbox" value="salles"> Šalles <span class="n" data-n="salles"></span></label>
+      <label class="opt"><input type="checkbox" value="cimdi"> Cimdi <span class="n" data-n="cimdi"></span></label>
+      <label class="opt"><input type="checkbox" value="lentes"> Galvas lentes <span class="n" data-n="lentes"></span></label>
+    </fieldset>
+
+    <fieldset class="fgroup" data-filter="season">
+      <legend>Sezona</legend>
+      <label class="opt"><input type="checkbox" value="ziema"> Ziema</label>
+      <label class="opt"><input type="checkbox" value="pavasaris-rudens"> Pavasaris / Rudens</label>
+      <label class="opt"><input type="checkbox" value="vasara"> Vasara</label>
+    </fieldset>
+
+    <fieldset class="fgroup" data-filter="size">
+      <legend>Izmērs</legend>
+      <label class="opt"><input type="checkbox" value="0-6m"> 0–6 mēn.</label>
+      <label class="opt"><input type="checkbox" value="6-12m"> 6–12 mēn.</label>
+      <label class="opt"><input type="checkbox" value="1-2g"> 1–2 gadi</label>
+      <label class="opt"><input type="checkbox" value="2-4g"> 2–4 gadi</label>
+      <label class="opt"><input type="checkbox" value="4-8g"> 4–8 gadi</label>
+      <label class="opt"><input type="checkbox" value="8-12g"> 8–12 gadi</label>
+      <label class="opt"><input type="checkbox" value="S/M"> Pieaugušo S/M</label>
+      <label class="opt"><input type="checkbox" value="L/XL"> Pieaugušo L/XL</label>
+    </fieldset>
+
+    <fieldset class="fgroup">
+      <legend>Krāsa</legend>
+      <div class="swatches" id="swatches">
+        <button class="swatch" data-color="roza" style="--sw: var(--yarn-roza)" aria-pressed="false" aria-label="Rozā" title="Rozā"></button>
+        <button class="swatch" data-color="zila" style="--sw: var(--yarn-zila)" aria-pressed="false" aria-label="Zila" title="Zila"></button>
+        <button class="swatch" data-color="salvija" style="--sw: var(--yarn-salvija)" aria-pressed="false" aria-label="Salvijas zaļa" title="Salvijas zaļa"></button>
+        <button class="swatch" data-color="medus" style="--sw: var(--yarn-medus)" aria-pressed="false" aria-label="Medus dzeltena" title="Medus dzeltena"></button>
+        <button class="swatch" data-color="mals" style="--sw: var(--yarn-mals)" aria-pressed="false" aria-label="Māla" title="Māla"></button>
+        <button class="swatch" data-color="peleka" style="--sw: var(--yarn-peleka)" aria-pressed="false" aria-label="Pelēka" title="Pelēka"></button>
+        <button class="swatch" data-color="kremkrasa" style="--sw: var(--yarn-kremkrasa)" aria-pressed="false" aria-label="Krēmkrāsa" title="Krēmkrāsa"></button>
+        <button class="swatch" data-color="cerinu" style="--sw: var(--yarn-cerinu)" aria-pressed="false" aria-label="Ceriņu" title="Ceriņu"></button>
+      </div>
+    </fieldset>
+
+    <fieldset class="fgroup pricebox">
+      <legend>Cena</legend>
+      <input type="range" id="maxPrice" min="10" max="60" value="60" step="1" aria-label="Maksimālā cena">
+      <output>Līdz <b id="priceOut">60 €</b></output>
+    </fieldset>
+
+    <fieldset class="fgroup" data-filter="flags">
+      <legend>Piedāvājumi</legend>
+      <label class="opt"><input type="checkbox" value="sale" id="fSale"> Akcijā</label>
+      <label class="opt"><input type="checkbox" value="new" id="fNew"> Jaunumi</label>
+    </fieldset>
+
+    <button class="fclear" id="clearAll">Notīrīt visus filtrus</button>
+  </aside>
+
+  <section aria-label="Produkti">
+    <div class="toolbar">
+      <button class="fopen" id="fopen">☰ Filtri <span id="fbadge"></span></button>
+      <p class="count" id="count"></p>
+      <div class="sortbox">
+        <label for="sort">Kārtot:</label>
+        <select id="sort">
+          <option value="pop">Populārākie</option>
+          <option value="new">Jaunākie</option>
+          <option value="asc">Cena: augoša</option>
+          <option value="desc">Cena: dilstoša</option>
+        </select>
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>
+      <h3>Nekas netika atrasts</h3>
+      <p>Pamēģini noņemt kādu no filtriem vai mainīt meklēšanas vārdu.</p>
+      <button class="btn" id="emptyClear">Notīrīt filtrus</button>
+    </div>
+  </section>
+</main>
+
+<footer class="site" id="kontakti">
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a class="logo" href="index.html" style="font-size:1.25rem">mini&nbsp;me <span class="pom"></span> <small>cepures · Rīga</small></a>
+        <p class="about">Rokām adītas cepures bērniem un vecākiem. Adīts ar mīlestību Rīgā, piegādājam visā Latvijā un Eiropā.</p>
+      </div>
+      <div>
+        <h4>Seko mums</h4>
+        <ul>
+          <li><a href="https://www.facebook.com/Minimicepures/">Facebook — Mini me</a></li>
+          <li><a href="https://www.tiktok.com/@minimeshop.lv">TikTok — @minimeshop.lv</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Noderīgi</h4>
+        <ul>
+          <li><a href="index.html">Sākums</a></li>
+          <li><a href="#kontakti">info@minimeshop.lv</a></li>
+          <li><a href="#kontakti">Piegāde: Omniva, DPD, Latvijas Pasts</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>© <span data-year>2026</span> Mini Me · minimeshop.lv · Rīga, Latvija</span>
+      <span><a href="admin.html">Administrācija</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/icons.js"></script>
+<script src="js/products.js"></script>
+<script src="js/site.js"></script>
+<script src="js/store.js"></script>
+</body>
+</html>
